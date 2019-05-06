@@ -1,0 +1,173 @@
+{
+    "en": {
+        "app": {
+            "storage": "Storage",
+            "storage-alt": "ⓧ Select where to store downloaded files",
+            "port-alt": "ⓧ Set web-server port number",
+            "update": "Update",
+            "update-alt": "ⓧ Update psndl database & covers",
+            "onoff-alt": "ⓧ Switch Power on/off",
+            "usb-write": "Writing to USB...",
+            "usb-build": "Build USB",
+            "usb-build-alt": "ⓧ Initialize a usb with needed files",
+            "usb-ready": "Your USB is ready. Plug it now in your PS3.",
+            "yes": "yes",
+            "no": "no",
+            "confirm": "Confirm",
+            "error-pending-downloads": "There are files in the process of downloading. Are you sure you want to leave?"
+        },
+        "xmb": {
+            "localstore": {
+                "localstore-title": " localSTORE Browser",
+                "localstore-info": "",
+                "update-xmb-title": "Update xmb menu",
+                "update-xmb-info": " update the contents of package_link file in usb000",
+                "update-server-xmb-title": "Update server address",
+                "update-server-xmb-info": " update server address and contents of package_link file in usb000",
+                "alpha-title": "Library A-Z",
+                "alpha-info": " alphabetically sorted pkg's",
+                "alpha-util-title": "File Manager",
+                "alpha-util-info": " delete and  resign pkg's",
+                "uninstall-util-title": "Uninstall localSTORE",
+                "uninstall-util-info": " put back the original HEN menu"
+            },
+            "root": {
+                "localstore-title": "localSTORE",
+                "localstore-info": "",
+                "localstore-shortcuts-title": "Shortcuts",
+                "localstore-shortcuts-info": " quickly access your favorite packages",
+                "han-temp-title": "Cpu temperature",
+                "han-temp-info": " check the current cpu and rsx temperatures",
+                "han-reboot-title": "Reboot",
+                "han-reboot-info": " soft reboot your console",
+                "han-enabler-title": "HAN enabler",
+                "han-enabler-info": " enable customized signed packages and licenses (cex)",
+                "han-debug-title": "Enable debug pkg's",
+                "han-debug-info": " enable debug pkg's (cex)",
+                "hen-enabler-title": "HEN enabler",
+                "hen-enabler-info": " enable homebrew"
+            }
+        },
+        "webapp": {
+            "downloads": "Downloads",
+            "hold-to-download": "Hold ⓧ to download",
+            "confirm-cancel-download": "Are you sure to cancel this download?",
+            "search": "Search",
+            "ok": "OK"
+        }
+    },
+    "es": {
+        "app": {
+            "storage": "Almacén",
+            "storage-alt": "ⓧ Selecciona dónde almacenar los archivos descargados",
+            "port-alt": "ⓧ Configura el puerto del servidor web",
+            "update": "Actualiza",
+            "update-alt": "ⓧ Actualiza la base de datos psndl y las portadas",
+            "onoff-alt": "ⓧ Enciende/Apaga",
+            "usb-write": "Escribiendo datos en el dispositivo USB...",
+            "usb-build": "Genera USB",
+            "usb-build-alt": "ⓧ Inicializa un USB con los archivos necesarios",
+            "usb-ready": "Tu dispositivo USB está listo. Conéctalo ahora a tu PS3.",
+            "yes": "si",
+            "no": "no",
+            "confirm": "Confirmar",
+            "error-pending-downloads": "Hay archivos en proceso de descarga. Estas seguro de querer salir?"
+        },
+        "xmb": {
+            "localstore": {
+                "localstore-title": " localSTORE Tienda",
+                "localstore-info": "",
+                "update-xmb-title": "Actualiza este menú",
+                "update-xmb-info": " actualiza y sincroniza los elementos del menu principal",
+                "update-server-xmb-title": "Configura el Servidor",
+                "update-server-xmb-info": " actualiza la configuración del servidor",
+                "alpha-title": "Libreria A-Z",
+                "alpha-info": " paquetes instalables ordenados alfabéticamente",
+                "alpha-util-title": "Administrador de archivos",
+                "alpha-util-info": " elimina y  re-firma los paquetes",
+                "uninstall-util-title": "Desinstalar localSTORE",
+                "uninstall-util-info": " elimina localSTORE del menu y restaura HEN menu"
+            },
+            "root": {
+                "localstore-title": "localSTORE",
+                "localstore-info": "",
+                "localstore-shortcuts-title": "Acceso rápido",
+                "localstore-shortcuts-info": " Accede rápidamente a tus paquetes preferidos",
+                "han-temp-title": "Temperatura del sistema",
+                "han-temp-info": " comprueba la temperatura de los procesadores",
+                "han-reboot-title": "Reinicio",
+                "han-reboot-info": " reinicio suave de la consola",
+                "han-enabler-title": "Habilitar HAN",
+                "han-enabler-info": " habilitar paquetes y licencias firmados personalizados (cex)",
+                "han-debug-title": "Habilitar Debug pkg's",
+                "han-debug-info": " habilitar paquetes y licencias debug firmados personalizados (cex)",
+                "hen-enabler-title": "Habilitar HEN",
+                "hen-enabler-info": " habilitar homebrew"
+            }
+        },
+        "webapp": {
+            "downloads": "Descargas",
+            "hold-to-download": "Descarga manteniendo ⓧ",
+            "confirm-cancel-download": "¿Está seguro de cancelar esta descarga?",
+            "search": "Buscar",
+            "ok": "OK"
+        }
+    },
+    "fr": {
+        "app": {
+            "storage": "Stockage",
+            "storage-alt": "ⓧ Sélectionnez où stocker les fichiers téléchargés",
+            "port-alt": "ⓧ Configurer le port du serveur Web",
+            "update": "Mise à jour",
+            "update-alt": "ⓧ Mettre à jour la base de données psndl et les couvertures",
+            "onoff-alt": "ⓧ Allumer / Éteindre",
+            "usb-write": "Sauvegarde des données sur le périphérique USB...",
+            "usb-build": "Initialiser",
+            "usb-build-alt": "ⓧ Initialiser une clé USB avec les fichiers nécessaires",
+            "usb-ready": "Votre clé USB est prête. Branchez-le maintenant sur votre PS3.",
+            "yes": "oui",
+            "no": "no",
+            "confirm": "Confirmer",
+            "error-pending-downloads": "Il y a des fichiers en cours de téléchargement. Êtes-vous sûr de vouloir partir?"
+        },
+        "xmb": {
+            "localstore": {
+                "localstore-title": " localSTORE Boutique",
+                "localstore-info": "",
+                "update-xmb-title": "Mettre à jour ce menu",
+                "update-xmb-info": " met à jour et synchronise les éléments du menu principal",
+                "update-server-xmb-title": "Configurez le serveur",
+                "update-server-xmb-info": " mettre à jour les paramètres du serveur",
+                "alpha-title": "Bibliothèque A-Z",
+                "alpha-info": " liste des packages classés par ordre alphabétique",
+                "alpha-util-title": "Utilitaires de la bibliothèque",
+                "alpha-util-info": " supprimer et  re-signer les paquets",
+                "uninstall-util-title": "Désinstaller localSTORE",
+                "uninstall-util-info": " remettre le menu HEN d'origine"
+            },
+            "root": {
+                "localstore-title": "localSTORE",
+                "localstore-info": "",
+                "localstore-shortcuts-title": "Accès rapide",
+                "localstore-shortcuts-info": " Accédez rapidement à vos packages préférés",
+                "han-temp-title": "Température du processeur",
+                "han-temp-info": " vérifier la température des processeurs",
+                "han-reboot-title": "Redémarrer",
+                "han-reboot-info": " redémarrage progressif de la console",
+                "han-enabler-title": "Activer HAN",
+                "han-enabler-info": " Activer les packages et licences signés personnalisés (cex)",
+                "han-debug-title": "Activer Debug pkg's",
+                "han-debug-info": " activer les packages et licences de débogage signés personnalisés (cex)",
+                "hen-enabler-title": "Activer HEN",
+                "hen-enabler-info": " activer homebrew"
+            }
+        },
+        "webapp": {
+            "downloads": "Téléchargements",
+            "hold-to-download": "Tenir ⓧ pour télécharger",
+            "confirm-cancel-download": "Êtes-vous sûr de vouloir annuler ce téléchargement?",
+            "search": "Recherche",
+            "ok": "OK"
+        }
+    }
+}

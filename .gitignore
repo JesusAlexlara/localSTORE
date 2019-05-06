@@ -1,0 +1,5 @@
+node_modules
+public/img/product-covers
+bdd/localstore-db.json
+server/config.json
+server/downloads.json

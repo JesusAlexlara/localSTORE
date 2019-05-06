@@ -1,0 +1,10 @@
+{
+  "downloadTmpDir": "../store/temporal-downloads",
+  "ip": "",
+  "packagesFolder": "",
+  "pendingDownloads": "./downloads.json",
+  "port": 5300,
+  "initialized": false,
+  "gametdb": false,
+  "isDev": false
+}

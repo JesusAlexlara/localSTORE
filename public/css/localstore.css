@@ -1,0 +1,637 @@
+* {
+  outline: 0;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100;
+  overflow: hidden;
+  /* background-color: red; */
+  font-family: "Roboto", sans-serif;
+  color: #ccc;
+  overflow: hidden;
+}
+
+html {
+  overflow: hidden;
+}
+
+img[src=""] {
+  display: none;
+}
+
+.ls-main {
+  left: 0;
+  top: 0;
+  width: 1824px;
+  height: 1026px;
+  min-width: 100%;
+  min-height: 100%;
+  max-width: 1824px;
+  margin: auto;
+  position: relative;
+  overflow: hidden;
+  display: none;
+}
+
+/* Grid */
+
+.ls-content {
+  display: block;
+  font-size: 0;
+  position: absolute;
+  bottom: 0;
+  padding-left: 32px;
+  padding-right: 20px;
+  margin-bottom: 12px;
+}
+
+.ls-grid-games {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.ls-grid-games li {
+  width: 166px;
+  height: 194px;
+  display: inline-block;
+  margin-bottom: 16px;
+  margin-right: 11px;
+  position: relative;
+  z-index: 0;
+}
+
+.ls-grid-image {
+  width: 166px;
+  height: 194px;
+  z-index: 0;
+  position: relative;
+  width: 100%;
+}
+
+.ls-grid-image img {
+  width: 158px;
+  height: 168px;
+  border: 0;
+  vertical-align: top;
+  outline: 0;
+  position: relative;
+  top: 18px;
+}
+
+.ls-grid-image::after {
+  content: "";
+  background-image: url(/public/img/cover-templates/top-ps3-dvd.png);
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 166px;
+  height: 194px;
+  -webkit-background-size: 166px 194px;
+}
+
+.ls-grid-games li:hover {
+  z-index: 1;
+}
+
+.ls-grid-games li::after {
+  content: attr(name) "\a◌ "attr(region) " ❖ " attr(type) "\a"attr(hold);
+  position: absolute;
+  background-color: #fff;
+  color: #333;
+  font-size: 12px;
+  left: 1px;
+  top: 36px;
+  padding: 8px;
+  white-space: pre-line;
+  line-height: 16px;
+  width: 126px;
+  overflow: hidden;
+  opacity: 0;
+  font-weight: bold;
+  z-index: 2;
+  -webkit-border-top-right-radius: 10px;
+  -webkit-border-bottom-right-radius: 10px;
+  border: 3px solid #fff;
+  border-left: 0px;
+}
+
+.ls-grid-games li:hover::after {
+  opacity: 1;
+}
+
+.ls-grid-games li.-nocover::after {
+  opacity: 1;
+}
+.ls-grid-hitarea {
+  position: absolute;
+  bottom: -20px;
+  width: 100%;
+  opacity: 0;
+}
+
+.ls-grid-hitarea button {
+  width: 100%;
+  height: 50px;
+}
+
+/* typo */
+
+.ls-title {
+  font-size: 48px;
+}
+
+.ls-description {
+  font-size: 24px;
+}
+
+.ls-info {
+  font-size: 18px;
+}
+
+.ls-alphabet {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: inline-block;
+  font-size: 0;
+  margin-bottom: 8px;
+}
+
+.ls-alphabet li {
+  font-size: 24px;
+  display: inline-block;
+  height: 63px;
+  opacity: 0.5;
+}
+
+.ls-alphabet li.-selected,
+.ls-alphabet li:hover {
+  opacity: 1;
+}
+
+.ls-alphabet li button {
+  -webkit-appearance: none;
+  background-color: transparent;
+  border: 0;
+  color: #fff;
+  font-size: 28px;
+  font-weight: 100;
+  user-select: none;
+  padding: 0px;
+  padding-right: 4px;
+  height: 100%;
+}
+
+.ls-alphabet.-filters li button {
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+.ls-alphabet--search {
+  position: relative;
+  padding-top: 6px;
+}
+
+.ls-alphabet--search::before {
+  content: "\\";
+  position: absolute;
+  left: 28px;
+  top: 32px;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.ls-alphabet--search::after {
+  content: "◯";
+  position: absolute;
+  left: 10px;
+  top: 6px;
+  font-weight: bold;
+  font-size: 28px;
+}
+
+.ls-detail {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 408px;
+  padding: 32px;
+  display: block;
+}
+
+.ls-detail--image {
+  width: 350px;
+  height: 408px;
+  display: inline-block;
+  vertical-align: top;
+  position: relative;
+}
+
+.ls-detail--image::after {
+  content: "";
+  background-image: url(/public/img/cover-templates/top-ps3-dvd.png);
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 350px;
+  height: 408px;
+  -webkit-background-size: 350px 408px;
+}
+
+#ls-detail--image {
+  width: 334px;
+  height: 358px;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  position: relative;
+  top: 36px;
+  left: 2px;
+}
+
+.ls-detail--content {
+  vertical-align: top;
+  display: inline-block;
+  width: 900px;
+  margin-left: 24px;
+}
+
+.ls-detail--title {
+  /* background-color: gray; */
+}
+
+.ls-detail--downloads {
+  vertical-align: top;
+  display: inline-block;
+  margin-left: 116px;
+  width: 328px;
+  background-color: rgba(0, 0, 0, 0.1);
+  height: 408px;
+  padding-left: 16px;
+  padding-right: 16px;
+  padding-top: 10px;
+}
+
+.ls-detail--downloads p {
+  margin-bottom: 4px;
+  margin-top: 0;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.ls-detail--downloads-update {
+  -webkit-apperance: none;
+  background-color: transparent;
+  border: 0;
+  margin-top: 320px;
+}
+
+.ls-detail--downloads-update img {
+  display: inline-block;
+  vertical-align: top;
+  margin-right: 16px;
+}
+
+.ls-progress-bar {
+  -webkit-border-radius: 10px;
+  -webkit-appearance: none;
+  background-color: transparent;
+  border-radius: 10px;
+  border: 2px solid white;
+  height: 14px;
+  width: 320px;
+  position: relative;
+  margin-bottom: 8px;
+  padding: 0;
+}
+
+.ls-progress-bar:hover {
+  border: 2px solid #206ee3;
+}
+
+.ls-progress-bar:hover::after {
+  content: attr(caption);
+  position: absolute;
+  left: -104px;
+  top: -8px;
+  background-color: #206ee3;
+  font-size: 14px;
+  -webkit-border-radius: 10px;
+  padding: 4px;
+  padding-left: 8px;
+  color: white;
+  font-weight: bold;
+  padding-right: 8px;
+}
+
+.ls-progress-bar.-resigning {
+  -webkit-animation-name: ls-resigning;
+  -webkit-animation-duration: 1s;
+  -webkit-animation-timing-function: linear;
+  -webkit-animation-delay: 0s;
+  -webkit-animation-direction: forwards;
+  -webkit-animation-iteration-count: infinite;
+  -webkit-animation-fill-mode: none;
+  -webkit-animation-play-state: running;
+}
+.ls-progress-bar.-resigning:hover::after {
+  border: 2px solid white;
+}
+.ls-progress-bar.-resigning:hover {
+  background-color: white;
+}
+
+.ls-progress {
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+  background-color: white;
+  height: 6px;
+  left: 2px;
+  position: absolute;
+  top: 2px;
+  width: 0px;
+}
+
+.ls-progress-bar:hover .ls-progress {
+  background-color: #206ee3;
+}
+
+.ls-native-prompt {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  /* background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAASCAMAAAANFixgAAAAdVBMVEWvso6fqYiRnYCBlX1thnZWdGxDZme9t4rLwI7ayY7u2Y3n0IWEiW1rd2RUZVvWv4K3pXakmXHKrmvbwHObimKDd1lrZlFJUEq0mF1XVUc/R0QzQEOZgE6Ba0MnNz4gMDlqVjoWKTZSQS5FPDIxLCkkHyEuMTTgWTfvAAAA10lEQVR4AVXOsdKUQBAH8d9/Bw/gC001U9//1YxgLY6Vurrkajqbnq4JAAQRbwSZATpChCACWQAGnZDPygoY3k4+jZbWGiSRmA2vWSwsRjYQF48+H6zC382xutmzEUznhOPrQtx7IcgWFnAWF1Fe59abPV8LAx7/HvT5JF7GO/d9eABOBIJyKTmnb0xAX7obhctVFUV+CEBHcSlCEWd+FkCfu4sSFEJ7TtWA3brfWQJFNJgqGKyx2QMFAPkVGIx6Fg4gNHjmN2BkoL0+QQPInwEDGuAABOd/U7VGY+akwG8AAAAASUVORK5CYII=); */
+  left: 0;
+  top: 0;
+  display: none;
+  font-size: 64px;
+  color: black;
+  padding-top: 420px;
+  background-repeat: no-repeat;
+  -webkit-background-size: 100% 100%;
+  text-align: center;
+}
+
+/* 
+.ls-native-filters {
+  padding-top: 0px;
+  text-align: center;
+  padding-top: 0px;
+}
+
+.ls-native-filters--list {
+  font-size: 32px;
+  color: white;
+  list-style-type: none;
+  display: inline-block;
+}
+
+.ls-native-filters--list li {
+  height: 48px;
+  line-height: 48px;
+  display: block;
+  width: 400px;
+  margin: 24px;
+  -webkit-border-radius: 10px;
+  position: relative;
+}
+
+.ls-native-filters--list li button {
+  position: absolute;
+  right: 0;
+  opacity: 0;
+}
+
+.ls-native-filters--list li.-selected,
+.ls-native-filters--list li:hover {
+  background-color: rgba(255, 255, 255, 0.8);
+  color: #2b3137;
+  font-weight: bold;
+}
+
+.ls-native-filters--list li:hover {
+  background-color: #fff;
+} */
+
+.ls-native-prompt--content {
+  z-index: 1;
+  position: relative;
+  text-align: center;
+  display: inline-block;
+  width: 600px;
+}
+
+.ls-native-prompt--hitarea {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+.ls-native-prompt--input {
+  -webkit-border-radius: 10px;
+  background-color: rgba(255, 255, 255, 0.2);
+  border: 0;
+  color: #fff;
+  display: inline-block;
+  max-width: 536px;
+  outline: 0;
+  padding: 32px;
+  box-sizing: border-box;
+}
+
+.ls-native-prompt--button {
+  display: inline-block;
+  background-color: white;
+  border: 0;
+  -webkit-border-radius: 10px;
+  padding: 16px;
+  font-size: 38px;
+  width: 100%;
+  font-weight: bold;
+  color: #73858d;
+}
+
+.ls-native-prompt--button:hover {
+  -webkit-transform: scale(1.1);
+}
+
+.ls-native-prompt--input::-webkit-input-placeholder {
+  /* Chrome/Opera/Safari */
+  color: #ccc;
+  line-height: 64px;
+}
+
+.ls-native-filters--content {
+}
+
+.ls-background-image {
+  background-repeat: no-repeat;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 0;
+  position: absolute;
+  z-index: -1;
+  overflow: hidden;
+}
+
+.ls-background-image img {
+  width: 130%;
+  height: 130%;
+  position: relative;
+  left: -15%;
+  top: -15%;
+}
+
+.ls-navigation button {
+  font-size: 32px;
+  color: white;
+  -webkit-appearance: none;
+  background-color: transparent;
+  border: 0;
+  width: 33%;
+  text-align: left;
+  -webkit-border-radius: 10px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  display: inline-block;
+}
+
+.ls-navigation button:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.ls-store {
+  background-color: rgba(0, 0, 0, 0.2);
+  vertical-align: bottom;
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
+  margin-right: 4px;
+  opacity: 1 !important;
+}
+
+.ls-store:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.ls-store button {
+  font-size: 16px !important;
+  font-weight: bold !important;
+  height: 63px;
+}
+
+.ls-store.-selected {
+  background-color: #fff;
+}
+
+.ls-store.-selected button {
+  color: #000;
+}
+
+[hidden] {
+  display: none;
+}
+
+.ls-logo {
+  display: table;
+  text-align: center;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  opacity: 0;
+  -webkit-animation-name: ls-logo--fade-in;
+  -webkit-animation-duration: 40s;
+  -webkit-animation-timing-function: linear;
+  -webkit-animation-delay: 0s;
+  -webkit-animation-direction: forwards;
+  -webkit-animation-iteration-count: 1;
+  -webkit-animation-fill-mode: none;
+  -webkit-animation-play-state: running;
+}
+
+.ls-logo--image {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.ls-logo--options {
+  position: absolute;
+  bottom: 0px;
+  left: 0;
+  width: 100%;
+  height: 80px;
+}
+
+hr {
+  border: 0px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  margin-bottom: 18px;
+}
+
+.ls-logo--options span {
+  font-size: 32px;
+}
+
+@-webkit-keyframes ls-logo--fade-in {
+  0% {
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@-webkit-keyframes ls-resigning {
+  0% {
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  40% {
+    opacity: 0;
+  }
+  60% {
+    opacity: 1;
+  }
+  80% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.ld-native-confirm {
+  display: none;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.ls-native-confirm--caption {
+  display: table-cell;
+  width: 100%;
+  height: 100%;
+  vertical-align: middle;
+  font-size: 64px;
+}
