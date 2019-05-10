@@ -47,7 +47,7 @@ function ps3xploit_resign() {
   input_pkgs_dir="${pkg_folder}/resigner/input/pkgs"
 
   # RIF Package ContentID and Name
-  rif_pkg_contentid="RIF000-LSINSTALL-0000000000000000";
+  rif_pkg_contentid="RIF000-LSINSTALL_00-0000000000000000";
 
 
   # contenId / contentId-name

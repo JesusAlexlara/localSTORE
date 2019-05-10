@@ -18,34 +18,28 @@
         },
         "xmb": {
             "localstore": {
-                "localstore-title": " localSTORE Browser",
+                "localstore-title": "",
                 "localstore-info": "",
-                "update-xmb-title": "Update xmb menu",
-                "update-xmb-info": " update the contents of package_link file in usb000",
-                "update-server-xmb-title": "Update server address",
-                "update-server-xmb-info": " update server address and contents of package_link file in usb000",
-                "alpha-title": "Library A-Z",
-                "alpha-info": " alphabetically sorted pkg's",
-                "alpha-util-title": "File Manager",
-                "alpha-util-info": " delete and  resign pkg's",
-                "uninstall-util-title": "Uninstall localSTORE",
-                "uninstall-util-info": " put back the original HEN menu"
+                "update-xmb-title": " Sync XMB Installable Content",
+                "update-xmb-info": " Reboot (HAN) / Reload XMB (HEN)",
+                "update-server-xmb-title": "Setup New Server Address",
+                "update-server-xmb-info": " Reboot (HAN) / Reload XMB (HEN)",
+                "alpha-title": "Install Downloaded Content",
+                "alpha-info": " Needs HAN Enabled",
+                "alpha-util-title": " Resign  Delete PKG's",
+                "alpha-util-info": ""
             },
             "root": {
-                "localstore-title": "localSTORE",
+                "localstore-title": " ",
                 "localstore-info": "",
-                "localstore-shortcuts-title": "Shortcuts",
-                "localstore-shortcuts-info": " quickly access your favorite packages",
-                "han-temp-title": "Cpu temperature",
-                "han-temp-info": " check the current cpu and rsx temperatures",
+                "localstore-shortcuts-title": "Favorite PKG's",
+                "localstore-shortcuts-info": " place your favorite pkg's in dev_usb000/localSTORE/favs",
                 "han-reboot-title": "Reboot",
                 "han-reboot-info": " soft reboot your console",
-                "han-enabler-title": "HAN enabler",
-                "han-enabler-info": " enable customized signed packages and licenses (cex)",
-                "han-debug-title": "Enable debug pkg's",
-                "han-debug-info": " enable debug pkg's (cex)",
-                "hen-enabler-title": "HEN enabler",
-                "hen-enabler-info": " enable homebrew"
+                "han-enabler-title": "Enabler",
+                "han-enabler-info": " enable customized signed packages and licenses (cex)  v4.84.2 HFW",
+                "hen-enabler-title": "Enabler",
+                "hen-enabler-info": " enable homebrew  v2.0.1"
             }
         },
         "webapp": {
@@ -84,23 +78,17 @@
                 "alpha-title": "Libreria A-Z",
                 "alpha-info": " paquetes instalables ordenados alfabéticamente",
                 "alpha-util-title": "Administrador de archivos",
-                "alpha-util-info": " elimina y  re-firma los paquetes",
-                "uninstall-util-title": "Desinstalar localSTORE",
-                "uninstall-util-info": " elimina localSTORE del menu y restaura HEN menu"
+                "alpha-util-info": " elimina y  re-firma los paquetes"
             },
             "root": {
                 "localstore-title": "localSTORE",
                 "localstore-info": "",
                 "localstore-shortcuts-title": "Acceso rápido",
                 "localstore-shortcuts-info": " Accede rápidamente a tus paquetes preferidos",
-                "han-temp-title": "Temperatura del sistema",
-                "han-temp-info": " comprueba la temperatura de los procesadores",
                 "han-reboot-title": "Reinicio",
                 "han-reboot-info": " reinicio suave de la consola",
                 "han-enabler-title": "Habilitar HAN",
                 "han-enabler-info": " habilitar paquetes y licencias firmados personalizados (cex)",
-                "han-debug-title": "Habilitar Debug pkg's",
-                "han-debug-info": " habilitar paquetes y licencias debug firmados personalizados (cex)",
                 "hen-enabler-title": "Habilitar HEN",
                 "hen-enabler-info": " habilitar homebrew"
             }
@@ -141,23 +129,17 @@
                 "alpha-title": "Bibliothèque A-Z",
                 "alpha-info": " liste des packages classés par ordre alphabétique",
                 "alpha-util-title": "Utilitaires de la bibliothèque",
-                "alpha-util-info": " supprimer et  re-signer les paquets",
-                "uninstall-util-title": "Désinstaller localSTORE",
-                "uninstall-util-info": " remettre le menu HEN d'origine"
+                "alpha-util-info": " supprimer et  re-signer les paquets"
             },
             "root": {
                 "localstore-title": "localSTORE",
                 "localstore-info": "",
                 "localstore-shortcuts-title": "Accès rapide",
                 "localstore-shortcuts-info": " Accédez rapidement à vos packages préférés",
-                "han-temp-title": "Température du processeur",
-                "han-temp-info": " vérifier la température des processeurs",
                 "han-reboot-title": "Redémarrer",
                 "han-reboot-info": " redémarrage progressif de la console",
                 "han-enabler-title": "Activer HAN",
                 "han-enabler-info": " Activer les packages et licences signés personnalisés (cex)",
-                "han-debug-title": "Activer Debug pkg's",
-                "han-debug-info": " activer les packages et licences de débogage signés personnalisés (cex)",
                 "hen-enabler-title": "Activer HEN",
                 "hen-enabler-info": " activer homebrew"
             }

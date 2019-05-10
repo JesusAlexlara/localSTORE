@@ -6,17 +6,41 @@ const jp = require("jsonpath");
 const compression = require("compression");
 const express = require("express");
 const fs = require("fs");
+const fsExtra = require("fs-extra");
 const moveFile = require("move-file");
 const path = require("path");
 const ip = require("ip");
 
-const static = express.static;
-const pageSize = 20;
-const downloadGlobal = {};
-let localstoreDb;
-let serverConfig;
+function mkDirByPathSync(targetDir, { isRelativeToScript = false } = {}) {
+  const sep = path.sep;
+  const initDir = path.isAbsolute(targetDir) ? sep : "";
+  const baseDir = isRelativeToScript ? __dirname : ".";
 
-const lsFileRegexp = /\[(.+?)\]-\[(ALL|US|EU|JP|HK)-(PS1|PS2|PS3|PSN|DEMO|C00|DLC|EDAT|MINI)\]-\[(([A-Z0-9]{6})-([A-Z0-9]{9})_[A-Z0-9]{2}-(.+?))\]-\[0x([0-9A-F]{32})\]/;
+  return targetDir.split(sep).reduce((parentDir, childDir) => {
+    const curDir = path.resolve(baseDir, parentDir, childDir);
+    try {
+      fs.mkdirSync(curDir);
+    } catch (err) {
+      if (err.code === "EEXIST") {
+        // curDir already exists!
+        return curDir;
+      }
+
+      // To avoid `EISDIR` error on Mac and `EACCES`-->`ENOENT` and `EPERM` on Windows.
+      if (err.code === "ENOENT") {
+        // Throw the original parentDir error on curDir `ENOENT` failure.
+        throw new Error(`EACCES: permission denied, mkdir '${parentDir}'`);
+      }
+
+      const caughtErr = ["EACCES", "EPERM", "EISDIR"].indexOf(err.code) > -1;
+      if (!caughtErr || (caughtErr && curDir === path.resolve(targetDir))) {
+        throw err; // Throw if it's just the last created dir.
+      }
+    }
+
+    return curDir;
+  }, initDir);
+}
 
 function readConfig() {
   return JSON.parse(
@@ -24,11 +48,14 @@ function readConfig() {
   );
 }
 
-function getServerHost() {
-  return `http://${serverConfig.ip}:${serverConfig.port}`;
+function writeConfig() {
+  fs.writeFileSync(
+    __dirname + "/config.json",
+    JSON.stringify(serverConfig),
+    "utf8"
+  );
 }
 
-// PKG DOWNLOADS
 function byteHelper(value) {
   // https://gist.github.com/thomseddon/3511330
   const units = ["b", "kB", "MB", "GB", "TB"],
@@ -40,7 +67,20 @@ function byteHelper(value) {
   );
 }
 
-function loadPendingDownloads() {
+const static = express.static;
+const pageSize = 20;
+const downloadGlobal = {};
+let localstoreDb;
+let serverConfig;
+
+const lsFileRegexp = /\[(.+?)\]-\[(ALL|US|EU|JP|HK)-(PS1|PS2|PS3|PSN|DEMO|C00|DLC|EDAT|MINI)\]-\[(([A-Z0-9]{6})-([A-Z0-9]{9})_[A-Z0-9]{2}-(.+?))\]-\[0x([0-9A-F]{32})\]/;
+
+function getServerHost() {
+  return `http://${serverConfig.ip}:${serverConfig.port}`;
+}
+
+// PKG DOWNLOADS
+function getDownloads() {
   return JSON.parse(
     fs.readFileSync(
       path.resolve(__dirname, serverConfig.pendingDownloads),
@@ -53,7 +93,7 @@ function addDownload(
   { fileName, url, contentId, name, rap, type, region },
   cb
 ) {
-  const pendingDownloads = loadPendingDownloads().downloads;
+  const pendingDownloads = getDownloads().downloads;
   if (
     pendingDownloads.filter(download => {
       download.url === url;
@@ -86,9 +126,7 @@ function addDownload(
 function removeDownload(contentId, cb) {
   downloadGlobal[contentId].stop();
   delete downloadGlobal[contentId];
-  const pendingDownloads = loadPendingDownloads().downloads.filter(function(
-    pending
-  ) {
+  const pendingDownloads = getDownloads().downloads.filter(function(pending) {
     return pending.contentId !== contentId;
   });
   fs.writeFileSync(
@@ -165,7 +203,7 @@ function removeDownloadedFile(
   { fileName, url, contentId, name, rap, type, region },
   dl
 ) {
-  const currentDownloads = loadPendingDownloads();
+  const currentDownloads = getDownloads();
   const filtered = currentDownloads.downloads.filter(download => {
     return download.url !== url;
   });
@@ -256,15 +294,15 @@ function removeDownloadedFile(
   }
 }
 
-function processDownloadQueue() {
-  const downloads = loadPendingDownloads();
+function startDownloadQueue() {
+  const downloads = getDownloads();
   downloads.downloads.forEach(download => {
     downloadFile(download);
   });
 }
 
 // MIDDLEWARE
-function progressResponse(req, res) {
+function getProgressResponse(req, res) {
   if (Object.keys(downloadGlobal).length > 0) {
     const progress = Object.entries(downloadGlobal).reduce(
       (acc, [key, value]) => {
@@ -279,7 +317,6 @@ function progressResponse(req, res) {
       },
       {}
     );
-    console.log("encio pr", downloadGlobal);
     Object.keys(downloadGlobal).forEach(key => {
       if (
         downloadGlobal[key].πcompleted &&
@@ -290,7 +327,6 @@ function progressResponse(req, res) {
     });
     res.status(200).send(progress);
   } else {
-    console.log("envio vacio", {});
     res.status(200).send({});
   }
 }
@@ -423,20 +459,33 @@ function setupServer() {
 
   app.use("/public", static(__dirname + "/../public"));
 
+  /* INSTALLER */
+  app.get("/xmb-backup", (req, res) => {
+    res.redirect(`${getServerHost()}/public/xmb-backup.html`);
+  });
   app.get("/xmb-installer", (req, res) => {
     res.redirect(`${getServerHost()}/public/xmb-installer.html`);
   });
+  app.get("/xmb-uninstaller", (req, res) => {
+    res.redirect(
+      `${getServerHost()}/public/xmb-installer.html?xml=category_game.xml.back`
+    );
+  });
 
+  /* IMAGE */
   app.get("/image-proxy", nocache, imageProxy);
 
+  /* SEARCH */
   app.get("/search", nocache, search);
 
+  /* INSTALL PKG */
   app.get("/pkg", (req, res) => {
     const { pkg, remove } = req.query;
     const file = path.resolve(__dirname, serverConfig.packagesFolder, pkg);
     res.sendFile(file);
   });
 
+  /* GET PKG FOLDER DIRECTORY LISTING */
   app.get("/package-directory", function(req, res) {
     serverConfig = JSON.parse(
       fs.readFileSync(__dirname + "/config.json", "utf8")
@@ -450,7 +499,6 @@ function setupServer() {
 
         break;
       case "delete":
-        console.log("DELETE", file);
         fs.unlink(
           path.resolve(__dirname, serverConfig.packagesFolder, file),
           () => {
@@ -470,7 +518,6 @@ function setupServer() {
           productDetailName,
           rap
         ] = file.match(lsFileRegexp);
-        console.log("RESIGN", file);
         resignPkgWithRap(
           file,
           rap,
@@ -506,7 +553,6 @@ function setupServer() {
             ),
             path.resolve(__dirname, serverConfig.packagesFolder, signedRapFile)
           );
-          console.log(getDirectory(serverConfig, localstoreDb));
           res.status(200).json(getDirectory(serverConfig, localstoreDb));
         });
 
@@ -514,6 +560,7 @@ function setupServer() {
     }
   });
 
+  /* GET updated localSTORE.xmb */
   app.get("/package-link-download", function(req, res) {
     config = readConfig;
     localstoreDb = localstoreDb || require("../bdd/localstore-db.json");
@@ -543,6 +590,7 @@ function setupServer() {
     res.redirect(`${getServerHost()}/public/localstore.html`);
   });
 
+  /* SERVER SIDE DOWNLOAS */
   app.get("/download", nocache, (req, res) => {
     if (req.query.data) {
       const {
@@ -575,37 +623,31 @@ function setupServer() {
           region
         },
         () => {
-          progressResponse(req, res);
+          getProgressResponse(req, res);
         }
       );
     }
   });
 
-  app.get("/download-progress", nocache, progressResponse);
+  app.get("/download-progress", nocache, getProgressResponse);
 
   app.get("/download-stop", nocache, function(req, resp) {
     if (req.query.contentId) {
       removeDownload(req.query.contentId, function() {
-        progressResponse(req, resp);
+        getProgressResponse(req, resp);
       });
     }
   });
 
+  /* APP START LISTEN */
   return app.listen(serverConfig.port, () => {
     console.log(`[localstore:// started] at: ${getServerHost()}`);
   });
 }
 
-function setupFolders() {
-  mkDirByPathSync(path.resolve(__dirname, serverConfig.downloadTmpDir));
-}
-
-function updateConfig() {
-  fs.writeFileSync(
-    __dirname + "/config.json",
-    JSON.stringify(serverConfig),
-    "utf8"
-  );
+function setupTempDownloadsFolder() {
+  // mkDirByPathSync(path.resolve(__dirname, serverConfig.downloadTmpDir));
+  fsExtra.ensureDirSync(path.resolve(__dirname, serverConfig.downloadTmpDir));
 }
 
 function main(callback) {
@@ -617,43 +659,12 @@ function main(callback) {
   if (!fs.existsSync(serverConfig.packagesFolder)) {
     serverConfig.packagesFolder = require("os").homedir();
   }
-  updateConfig();
+  writeConfig();
 
-  setupFolders();
-  processDownloadQueue();
+  setupTempDownloadsFolder();
+  startDownloadQueue();
 
   callback(setupServer(), serverConfig);
-}
-
-function mkDirByPathSync(targetDir, { isRelativeToScript = false } = {}) {
-  const sep = path.sep;
-  const initDir = path.isAbsolute(targetDir) ? sep : "";
-  const baseDir = isRelativeToScript ? __dirname : ".";
-
-  return targetDir.split(sep).reduce((parentDir, childDir) => {
-    const curDir = path.resolve(baseDir, parentDir, childDir);
-    try {
-      fs.mkdirSync(curDir);
-    } catch (err) {
-      if (err.code === "EEXIST") {
-        // curDir already exists!
-        return curDir;
-      }
-
-      // To avoid `EISDIR` error on Mac and `EACCES`-->`ENOENT` and `EPERM` on Windows.
-      if (err.code === "ENOENT") {
-        // Throw the original parentDir error on curDir `ENOENT` failure.
-        throw new Error(`EACCES: permission denied, mkdir '${parentDir}'`);
-      }
-
-      const caughtErr = ["EACCES", "EPERM", "EISDIR"].indexOf(err.code) > -1;
-      if (!caughtErr || (caughtErr && curDir === path.resolve(targetDir))) {
-        throw err; // Throw if it's just the last created dir.
-      }
-    }
-
-    return curDir;
-  }, initDir);
 }
 
 function resize({ file, quality, sx = 0, sy = 0, sw, sh, dx, dy, dw, dh }) {
@@ -674,7 +685,6 @@ function resize({ file, quality, sx = 0, sy = 0, sw, sh, dx, dy, dw, dh }) {
 }
 
 function xmbGameIcon({ file, quality, type, signed }) {
-  console.log("xmb icon", signed);
   const typeMap = {
     PS1: "ps1",
     PS2: "ps2",

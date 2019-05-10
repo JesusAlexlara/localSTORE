@@ -12,6 +12,10 @@ function objPath(path, obj) {
   return path.split(".").reduce((o, i) => o[i], obj);
 }
 
+function stripNonAscii(source) {
+  return source.replace(/[^\x00-\x7F]/g, "");
+}
+
 function getServerHost(serverConfig) {
   return `http://${serverConfig.ip}:${serverConfig.port}`;
 }
@@ -23,6 +27,8 @@ function getScript(file, replacements) {
   );
   return fileContents;
 }
+
+const nodePackage = require("../package.json");
 
 function getPackageLink(serverConfig) {
   return `
@@ -55,36 +61,18 @@ function getPackageLink(serverConfig) {
                     <String>/dev_usb000/localSTORE/localstore-app.png</String>
                 </Pair>
                 <Pair key="title">
-                    <String>localSTORE</String>
+                    <String>${objPath(
+                      "xmb.root.localstore-title",
+                      localeMap
+                    )}</String>
                 </Pair>
                 <Pair key="info">
-                    <String></String>
+                    <String> v${nodePackage.version}   ${getServerHost(
+    serverConfig
+  ).replace("http://", "")}</String>
                 </Pair>
                 <Pair key="ingame">
                     <String>disable</String>
-                </Pair>
-            </Table>
-            <Table key="js-temp">
-                <Pair key="icon">
-                    <String>/dev_usb000/localSTORE/localstore-temp.png</String>
-                </Pair>
-                <Pair key="title">
-                    <String>${objPath(
-                      "xmb.root.han-temp-title",
-                      localeMap
-                    )}</String>
-                </Pair>
-                <Pair key="info">
-                    <String>${objPath(
-                      "xmb.root.han-temp-info",
-                      localeMap
-                    )}</String>
-                </Pair>
-                <Pair key="module_name">
-                    <String>webrender_plugin</String>
-                </Pair>
-                <Pair key="module_action">
-                    <String>${getScript("temperature")}</String>
                 </Pair>
             </Table>
             <Table key="js-reboot">
@@ -156,29 +144,6 @@ function getPackageLink(serverConfig) {
                     <String>${getScript("hen-enabler")}</String>
                 </Pair>
             </Table>
-            <Table key="js-debug-pkg">
-                <Pair key="icon">
-                    <String>/dev_usb000/localSTORE/localstore-debug-pkg.png</String>
-                </Pair>
-                <Pair key="title">
-                    <String>${objPath(
-                      "xmb.root.han-debug-title",
-                      localeMap
-                    )}</String>
-                </Pair>
-                <Pair key="info">
-                    <String>${objPath(
-                      "xmb.root.han-debug-info",
-                      localeMap
-                    )}</String>
-                </Pair>
-                <Pair key="module_name">
-                    <String>webrender_plugin</String>
-                </Pair>
-                <Pair key="module_action">
-                    <String>${getScript("debug-enabler")}</String>
-                </Pair>
-            </Table>
             <Table key="ls-quick-access-icon">
                 <Pair key="icon">
                     <String>/dev_usb000/localSTORE/localstore-quick-access.png</String>
@@ -205,17 +170,16 @@ function getPackageLink(serverConfig) {
         </Attributes>
         <Items>
             <Query class="type:x-xmb/folder-pixmap" key="pkg_main" attr="pkg_main" src="xmb://localhost/dev_usb000/localSTORE.xmb#pkg_items" />
-            <Query class="type:x-xmb/folder-pixmap" key="ls-quick-access-icon" attr="ls-quick-access-icon" src="#ls_install_usb_path" />
-            <Query class="type:x-xmb/module-action" key="js-han-enabler" attr="js-han-enabler"/>
             <Query class="type:x-xmb/module-action" key="js-hen-enabler" attr="js-hen-enabler"/>
-            <Query class="type:x-xmb/module-action" key="js-debug-pkg" attr="js-debug-pkg"/>
+            <Query class="type:x-xmb/module-action" key="js-han-enabler" attr="js-han-enabler"/>
             <Query class="type:x-xmb/module-action" key="js-reboot" attr="js-reboot"/>
-            <Query class="type:x-xmb/module-action" key="js-temp" attr="js-temp"/>
+            <Query class="type:x-xmb/folder-pixmap" key="ls-quick-access-icon" attr="ls-quick-access-icon" src="#ls_install_usb_path" />
         </Items>
     </View>
     <View id="ls_install_usb_path">
         <Items>
-            <Query class="type:x-xmb/xmlpackagefolder" key="host_provider_usb0" src="host://localhost/q?path=/dev_usb000/localSTORE/system&suffix=.pkg&subclass=x-host/package" />
+            <Query class="type:x-xmb/xmlpackagefolder" key="host_provider_usb0" src="host://localhost/q?path=/dev_usb000/favs&suffix=.pkg&subclass=x-host/package" />
+            <Query class="type:x-xmb/xmlpackagefolder" key="host_provider_usb0" src="host://localhost/q?path=/dev_usb000/localSTORE/favs&suffix=.pkg&subclass=x-host/package" />
         </Items>
     </View>
 </XMBML>`;

@@ -12,6 +12,8 @@ const { getCurrentWindow } = require("electron").remote;
 const ip = require("ip");
 const ncp = require("ncp").ncp;
 
+const { startPs3netServ, stopPs3netServ } = require("./server/ls-ps3netsrv.js");
+
 const defaultLocale = "en";
 const locales = require("./locales.json");
 const avaliableLocales = Object.keys(locales);
@@ -21,6 +23,7 @@ const localeMap =
 
 let config;
 let serverRunning = false;
+let ps3netsrvRunning = false;
 let serverInstance;
 let $;
 let isActFilePresent = hasActFile();
@@ -87,56 +90,51 @@ function usbTargetSelected(event) {
 
   ncp.limit = 16;
 
-  ncp(
-    path.resolve(__dirname, "public/img/xmb"),
-    path.resolve(usbFolder[0] + "/localSTORE"),
-    function(err) {
-      if (err) {
-        return console.error(err);
-      }
-      ncp(
-        path.resolve(__dirname, "public/hen-files"),
-        path.resolve(usbFolder[0] + "/localSTORE/hen-files"),
-        function(err) {
-          if (err) {
-            return console.error(err);
-          }
-          getXMB(readConfig(), require("./bdd/localstore-db.json")).then(
-            storeItemsXML => {
-              const xml = getPackageLink(
-                readConfig(),
-                require("./bdd/localstore-db.json")
-              );
-
-              fs.writeFileSync(
-                path.resolve(usbFolder[0] + "/localSTORE.xmb"),
-                storeItemsXML,
-                "utf8"
-              );
-
-              fs.writeFileSync(
-                path.resolve(usbFolder[0] + "/localSTORE.xml"),
-                xml,
-                "utf8"
-              );
-              fs.writeFileSync(
-                path.resolve(usbFolder[0] + "/package_link.xml"),
-                xml.replace('id="localSTORE_main"', 'id="package_link"'),
-                "utf8"
-              );
-              $.output.innerHTML = localeMap.app["usb-ready"];
-              $.output.style.display = "block";
-              setTimeout(() => {
-                $.output.style.display = "none";
-              }, 3500);
-
-              updateUIStatus();
-            }
-          );
+  ncp(path.resolve(__dirname, "pkgs"), path.resolve(usbFolder[0]), function(
+    err
+  ) {
+    ncp(
+      path.resolve(__dirname, "public/img/xmb"),
+      path.resolve(usbFolder[0] + "/localSTORE"),
+      function(err) {
+        if (err) {
+          return console.error(err);
         }
-      );
-    }
-  );
+        getXMB(readConfig(), require("./bdd/localstore-db.json")).then(
+          storeItemsXML => {
+            const xml = getPackageLink(
+              readConfig(),
+              require("./bdd/localstore-db.json")
+            );
+
+            fs.writeFileSync(
+              path.resolve(usbFolder[0] + "/localSTORE.xmb"),
+              storeItemsXML,
+              "utf8"
+            );
+
+            fs.writeFileSync(
+              path.resolve(usbFolder[0] + "/localSTORE.xml"),
+              xml,
+              "utf8"
+            );
+            fs.writeFileSync(
+              path.resolve(usbFolder[0] + "/package_link.xml"),
+              xml.replace('id="localSTORE_main"', 'id="package_link"'),
+              "utf8"
+            );
+            $.output.innerHTML = localeMap.app["usb-ready"];
+            $.output.style.display = "block";
+            setTimeout(() => {
+              $.output.style.display = "none";
+            }, 3500);
+
+            updateUIStatus();
+          }
+        );
+      }
+    );
+  });
 }
 
 function pkgTargetSelected(event) {
@@ -153,6 +151,20 @@ function pkgTargetSelected(event) {
   updateUIStatus();
   writeConfig();
   reloadServer();
+}
+
+function ps3netsrvTargetSelected(event) {
+  const folder = dialog.showOpenDialog({
+    properties: ["openDirectory"]
+  });
+
+  if (!folder) {
+    return;
+  }
+  config.ps3netservFolder = folder[0];
+  updatePS3NetServUIStatus();
+  writeConfig();
+  updatePs3netsrvPort();
 }
 
 function hasActFile() {
@@ -206,6 +218,7 @@ function forceDatabaseReload() {
 function initializeSelectors() {
   $ = {
     storageFile: document.getElementById("ls-storage-button"),
+    ps3StorageFile: document.getElementById("ls-ps3netserv-storage-button"),
     usbFile: document.getElementById("ls-usb-button"),
     onOff: document.getElementById("ls-button-onoff"),
     reloadDb: document.getElementById("ls-button-reload"),
@@ -216,7 +229,9 @@ function initializeSelectors() {
     setIdps: document.getElementById("ls-set-idps"),
     body: document.body,
     i18nTitles: document.querySelectorAll("[i18n-title]"),
-    i18n: document.querySelectorAll("[i18n]")
+    i18n: document.querySelectorAll("[i18n]"),
+    ps3netservOnOff: document.getElementById("ls-ps3netsrv-onoff"),
+    ps3netservPort: document.getElementById("ls-ps3netserv-port")
   };
 
   $.i18nTitles.forEach(el => {
@@ -252,6 +267,7 @@ function updateServerPort() {
 
 function initializeEvents() {
   $.storageFile.addEventListener("click", pkgTargetSelected);
+  $.ps3StorageFile.addEventListener("click", ps3netsrvTargetSelected);
   $.usbFile.addEventListener("click", usbTargetSelected);
   $.onOff.addEventListener("click", e => {
     if (serverRunning) {
@@ -271,6 +287,42 @@ function initializeEvents() {
   });
   $.setAct.addEventListener("click", selectAct);
   $.setIdps.addEventListener("click", selectIdps);
+
+  $.ps3netservPort.addEventListener("blur", updatePs3netsrvPort);
+  $.ps3netservPort.addEventListener("keyup", function(event) {
+    if (event.key === "Enter") {
+      updatePs3netsrvPort();
+    }
+  });
+  $.ps3netservOnOff.addEventListener("click", togglePs3NetServ);
+}
+
+function togglePs3NetServ() {
+  if (ps3netsrvRunning) {
+    $.ps3netservOnOff.classList.remove("active");
+    ps3netsrvRunning = false;
+    stopPs3netServ();
+    return;
+  }
+  $.ps3netservOnOff.classList.add("active");
+  startPs3netServ($.ps3netservPort.value);
+  ps3netsrvRunning = true;
+}
+
+function updatePs3netsrvPort() {
+  if (ps3netsrvRunning) {
+    $.ps3netservOnOff.classList.remove("active");
+    ps3netsrvRunning = false;
+    stopPs3netServ(() => {
+      ps3netsrvRunning = true;
+      $.ps3netservOnOff.classList.add("active");
+      startPs3netServ($.ps3netservPort.value);
+    });
+    return;
+  }
+  ps3netsrvRunning = true;
+  $.ps3netservOnOff.classList.add("active");
+  startPs3netServ($.ps3netservPort.value);
 }
 
 function updateDatabase() {
@@ -304,6 +356,10 @@ function updateUIStatus() {
     isActFilePresent && isIdpsFilePresent ? "block" : "none";
 }
 
+function updatePS3NetServUIStatus() {
+  $.ps3netservPort.value = config.ps3netservPort;
+}
+
 window.downloadPkgConfig = usbTargetSelected;
 window.updateDatabase = forceDatabaseReload;
 window.startServer = startServer;
@@ -311,11 +367,16 @@ window.stopServer = stopServer;
 
 function main() {
   config = readConfig();
+  const desktop = path.join(require("os").homedir(), "Desktop");
+
   if (config.packagesFolder === "") {
-    const desktop = path.join(require("os").homedir(), "Desktop");
     config.packagesFolder = desktop;
-    writeConfig();
   }
+  if (config.ps3netservFolder === "") {
+    config.ps3netservFolder = desktop;
+  }
+  writeConfig();
+
   getServerIp(ip => {
     config.ip = ip;
     writeConfig();

@@ -32,6 +32,10 @@ function stripChars(txt) {
   return txt.replace(/[^a-zA-Z0-9]/g, "-");
 }
 
+function stripNonAscii(source) {
+  return source.replace(/[^\x00-\x7F]/g, "");
+}
+
 function getScript(file, replacements) {
   let fileContents = fs.readFileSync(
     __dirname + "/offline-scripts/" + file + ".txt",
@@ -238,7 +242,9 @@ function getXMB(serverConfig, localstoreDb) {
       const alphabetIcons = filledLetters.map(letter => {
         return iconEntry({
           tableKey: "letter_" + letter.toLowerCase(),
-          icon: `/dev_usb000/localSTORE/letters/card-${letter}.png`,
+          icon: `${getServerHost(
+            serverConfig
+          )}/public/img/xmb/letters/card-${letter}.png`,
           name: "",
           subtitle: ""
         });
@@ -317,7 +323,9 @@ function getXMB(serverConfig, localstoreDb) {
         <Attributes>
             <Table key="pkg_main">
                 <Pair key="icon">
-                    <String>/dev_usb000/localSTORE/localstore-app.png</String>
+                    <String>${getServerHost(
+                      serverConfig
+                    )}/public/img/xmb/localstore-app.png</String>
                 </Pair>
                 <Pair key="title">
                     <String>localstore://</String>
@@ -345,10 +353,7 @@ function getXMB(serverConfig, localstoreDb) {
               "xmb.localstore.localstore-title",
               localeMap
             )}</String></Pair>
-            <Pair key="info"><String>${getServerHost(serverConfig).replace(
-              "http://",
-              ""
-            )}</String></Pair>
+            <Pair key="info"><String></String></Pair>
             <Pair key="module_name"><String>webrender_plugin</String></Pair>
             <Pair key="module_action"><String>${getServerHost(
               serverConfig
@@ -372,7 +377,9 @@ function getXMB(serverConfig, localstoreDb) {
             )}/public/file-manager.html</String></Pair>
         </Table>        
         <Table key="update_package_link">
-            <Pair key="icon"><String>/dev_usb000/localSTORE/localstore-update.png</String></Pair>
+            <Pair key="icon"><String>${getServerHost(
+              serverConfig
+            )}/public/img/xmb/localstore-update.png</String></Pair>
             <Pair key="title"><String>${objPath(
               "xmb.localstore.update-xmb-title",
               localeMap
@@ -390,7 +397,9 @@ function getXMB(serverConfig, localstoreDb) {
             )}');</String></Pair>
         </Table>
         <Table key="update_package_link_server">
-          <Pair key="icon"><String>/dev_usb000/localSTORE/localstore-settings.png</String></Pair>
+            <Pair key="icon"><String>${getServerHost(
+              serverConfig
+            )}/public/img/xmb/localstore-settings.png</String></Pair>
           <Pair key="title"><String>${objPath(
             "xmb.localstore.update-server-xmb-title",
             localeMap
@@ -406,7 +415,9 @@ function getXMB(serverConfig, localstoreDb) {
         </Table>
         <Table key="alphabetical_link">
             <Pair key="icon">
-                <String>/dev_usb000/localSTORE/localstore-alphabet.png</String>
+                <String>${getServerHost(
+                  serverConfig
+                )}/public/img/xmb/localstore-alphabet.png</String>
             </Pair>
             <Pair key="title">
                 <String>${objPath(
@@ -424,31 +435,6 @@ function getXMB(serverConfig, localstoreDb) {
                 <String>disable</String>
             </Pair>
         </Table>
-        <Table key="ls-uninstall">
-            <Pair key="icon">
-                <String>/dev_usb000/localSTORE/localstore-app.png</String>
-            </Pair>
-            <Pair key="title">
-                <String>${objPath(
-                  "xmb.localstore.uninstall-util-title",
-                  localeMap
-                )}</String>
-            </Pair>
-            <Pair key="info">
-                <String>${objPath(
-                  "xmb.localstore.uninstall-util-info",
-                  localeMap
-                )}</String>
-            </Pair>
-            <Pair key="module_name">
-                <String>webrender_plugin</String>
-            </Pair>
-            <Pair key="module_action">
-                <String>${getServerHost(
-                  serverConfig
-                )}/public/hen-xmb-installer.html?xml=category_game_hen.xml</String>
-            </Pair>
-        </Table>
     </Attributes>
         <Items>
           <Query class="type:x-xmb/module-action" key="localstore_link" attr="localstore_link" />
@@ -456,7 +442,6 @@ function getXMB(serverConfig, localstoreDb) {
           <Query class="type:x-xmb/module-action" key="alphabetical_link_manager" attr="alphabetical_link_manager" />
           <Query class="type:x-xmb/module-action" key="update_package_link" attr="update_package_link" />
           <Query class="type:x-xmb/module-action" key="update_package_link_server" attr="update_package_link_server" />
-          <Query class="type:x-xmb/module-action" key="ls-uninstall" attr="ls-uninstall"/>
         </Items>
     </View>
     <View id="alphabetical">
@@ -499,7 +484,8 @@ function pkgEntry(
   serverConfig
 ) {
   const gameId = contentId && contentId !== "" ? contentId : productCode;
-  const key = "file_" + gameId;
+  const key = "file_" + stripNonAscii(gameId);
+  console.log(gameId, key);
   const icon = `/dev_usb000/localSTORE/localstore-install.png`;
 
   return `<View id="${gameId}-${stripChars(file)}">

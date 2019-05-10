@@ -1,10 +1,11 @@
 {
   "name": "localstore",
-  "version": "1.0.0",
+  "version": "1.0.0-beta",
   "description": "",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
+    "build-ps3netsrv-darwin": "cd server/ps3netsrv/sources/darwin && make",
     "pkg-copy-bases": "cp ./server/config.base.json ./server/config.json && cp ./server/downloads.base.json ./server/downloads.json && cp ./bdd/localstore-db.base.json ./bdd/localstore-db.json",
     "pkg-osx": "electron-packager --prune=true --overwrite --out=../localSTORE-APPS --platform=darwin --icon=localstore.icns ./",
     "pkg-x32": "electron-packager --prune=true --overwrite --out=../localSTORE-APPS --platform=win32 --arch=ia32 --icon=localstore.ico ./",
@@ -32,6 +33,7 @@
     "electron-photon": "^1.1.6",
     "express": "^4.16.4",
     "fs-extra": "7.0.1",
+    "ip": "^1.1.5",
     "jsonpath": "^1.0.1",
     "jsonpath-plus": "^0.18.0",
     "move-file": "^1.2.0",
@@ -39,9 +41,9 @@
     "node-downloader-helper": "^1.0.10",
     "node-wget": "^0.4.3",
     "request": "^2.88.0",
+    "tree-kill": "^1.2.1",
     "unzipper": "^0.9.11",
-    "whatwg-fetch": "^3.0.0",
-    "ip": "^1.1.5"
+    "whatwg-fetch": "^3.0.0"
   },
   "productName": "localstore"
 }

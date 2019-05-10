@@ -20,7 +20,7 @@
         height: 200%;
         padding: 24px;
         margin: 0;
-        transform: scale(0.7) translateX(-542px) translateY(-50px);
+        transform: scale(0.7) translateX(-542px) translateY(-90px);
       }
 
       .ls-initialize-output {
@@ -519,6 +519,46 @@
       </li>
       <li class="ls-power" i18n-title="app.onoff-alt">
         <div class="ls-button-onoff" id="ls-button-onoff">
+          <svg class="ls-icon" style="width:64px; margin-top:10px;">
+            <use xlink:href="#ls-icon-onoff"></use>
+          </svg>
+        </div>
+      </li>
+    </ul>
+    <ul class="ls-group-selector">
+      <li
+        style=" display:inline-block;padding-top:20px; color:#fff; margin-right:50px;margin-left:60px; width:auto;"
+      >
+        <h2>PS3NetServ</h2>
+      </li>
+      <li
+        class="ls-button -center -padding-m ls-file"
+        i18n-title="app.storage-alt"
+        id="ls-ps3netserv-storage-button"
+      >
+        <svg class="ls-icon">
+          <use xlink:href="#ls-icon-folder"></use>
+        </svg>
+        <p i18n="app.storage"></p>
+      </li>
+      <li class="ls-button -center -padding-m" i18n-title="app.port-alt">
+        <div style="text-align:center;">
+          <svg class="ls-icon"><use xlink:href="#ls-icon-server"></use></svg>
+
+          <input
+            type="text"
+            id="ls-ps3netserv-port"
+            style="display:block;position:relative; top:-3px; font-size:16px; text-align:center;width:76px;  border-radius:10px; border:0;"
+            value="38008"
+          />
+        </div>
+      </li>
+      <li
+        class="ls-power"
+        i18n-title="app.onoff-alt"
+        style=" margin-right: 520px;"
+      >
+        <div class="ls-button-onoff" id="ls-ps3netsrv-onoff">
           <svg class="ls-icon" style="width:64px; margin-top:10px;">
             <use xlink:href="#ls-icon-onoff"></use>
           </svg>

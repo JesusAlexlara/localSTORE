@@ -1,5 +1,5 @@
 // Modules to control application life and create native browser window
-
+const { stopPs3netServ } = require("./server/ls-ps3netsrv");
 const { app, BrowserWindow } = require("electron");
 
 const fs = require("fs");
@@ -27,7 +27,7 @@ function createWindow() {
   console.log("process.platform", process.platform);
   mainWindow = new BrowserWindow({
     width: 760,
-    height: process.platform !== "darwin" ? 118 : 110,
+    height: process.platform !== "darwin" ? 218 : 210,
     resizable: false,
     titleBarStyle: "customButtonsOnHover",
     frame: true,
@@ -84,6 +84,10 @@ app.on("ready", createWindow);
 // Quit when all windows are closed.
 app.on("window-all-closed", function() {
   app.quit();
+});
+
+app.on("before-quit", function() {
+  stopPs3netServ();
 });
 
 app.on("activate", function() {

@@ -87,6 +87,15 @@ function storeSelect(el, store) {
 }
 // Alphabet Selection
 function alphabetSelect(e) {
+  var target = e.target.innerHTML;
+  if (target === "ø") {
+    // TODO clear search
+    searchState.page = 0;
+    searchState.query = "";
+    uiState.alphabetLastSelect = null;
+    update();
+    return;
+  }
   if (uiState.alphabetLastSelect) {
     toggleClass(uiState.alphabetLastSelect, "-selected");
   }
