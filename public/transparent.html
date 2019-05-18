@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <style>
+      html {
+        top: 0;
+        overflow: hidden;
+        position: relative;
+        left: 1980px;
+      }
+
+      body {
+        background-color: red;
+      }
+
+      .virtual-body {
+        position: relative;
+        left: -1980px;
+        width: 1824px;
+        height: 1026px;
+      }
+
+      .button {
+        width: 300px;
+        height: 60px;
+        background-color: #ff0;
+      }
+      .button:hover {
+        background-color: #f0f;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="virtual-body">
+      <div class="virtual-body-container">
+        Container
+        <div class="button">button</div>
+        <div class="button">button</div>
+        <div class="button">button</div>
+        <div class="button">button</div>
+        <div class="button">button</div>
+        <div class="button">button</div>
+        <div class="button">button</div>
+        <div class="button">button</div>
+        <div class="button">button</div>
+      </div>
+    </div>
+  </body>
+</html>

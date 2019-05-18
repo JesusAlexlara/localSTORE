@@ -1,0 +1,11 @@
+https://www.psx-place.com/threads/research-xmb-icons-resolution-and-scaling.13902/
+
+
+XMB displayed icon dimensions (focused)
+----------------------------------------
+1080p = 194x194
+720p = 128x128
+480p = 85x85
+272p = 85x85
+
+

@@ -110,11 +110,11 @@
       return (
         o(
           this,
-          new function(e, n, t) {
+          new (function(e, n, t) {
             (this.onFulfilled = "function" == typeof e ? e : null),
               (this.onRejected = "function" == typeof n ? n : null),
               (this.promise = t);
-          }(e, t, r)
+          })(e, t, r)
         ),
         r
       );

@@ -3,3 +3,6 @@ public/img/product-covers
 bdd/localstore-db.json
 server/config.json
 server/downloads.json
+Thumbs.db
+Thumbs.db:encryptable
+.DS_store

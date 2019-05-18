@@ -12,159 +12,190 @@
     <script src="js/ls.api.js"></script>
   </head>
   <body>
-    <div class="ls-background-image">
-      <img
-        src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAASCAMAAAANFixgAAAAPFBMVEVUYWc6R1pCVmRicHZ+dn+gfZewk6hFY2xQbnuSiZBhgIlripB7l56Qp6ulsrQzO1AvMkcqK0AlJDkeHC8JxtK6AAAAvElEQVR4AQXBQVICQRRAsbzGLlgJev9TzgoKmW+SAiewnFxSYGQB+3V7ss51cmn/BUNXQG/spwvZPmC+dH1veN0WvK7S50vwvND1vSErJhIBQ2uy0QqEBAyF2FkQERpQ3w60swARgO4Nh+zAOlnnQoa6Zzi0BTA9b4B39zXGQTYNbwA4e2QMBwIMAPWIYTgAvgFw9FiGaRiAAJh+AsMAmqZpgulnwWAaAECc/QYMAAwizh6XgWHQxABiff4BAhtKw4+y7scAAAAASUVORK5CYII="
-      />
-    </div>
-    <div id="ls-logo" class="ls-logo" onmousedown="skipIntro()">
-      <div class="ls-logo--image ls-logo--image-logo">
-        <img src="img/app/localstore-logo.png" width="400" />
-      </div>
-      <div class="ls-logo--image ls-logo--image-gamepad">
-        <img src="img/app/localstore-gamepad-intro.png" width="400" />
-      </div>
-      <div class="ls-logo--options">
-        <hr />
-        <span>ⓧ SKIP</span>
-      </div>
-    </div>
-    <div id="ls-main" class="ls-main">
-      <div class="ls-detail">
-        <div class="ls-detail--image">
-          <img
-            id="ls-detail--image"
-            src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
-          />
-        </div>
-        <div class="ls-detail--content">
-          <div class="ls-detail--title">
-            <div class="ls-title" id="ls-title"></div>
-          </div>
-          <div class="ls-detail--description">
-            <div id="ls-info" class="ls-info"></div>
-          </div>
-        </div>
-        <div class="ls-detail--downloads">
-          <div class="ls-description" id="i18-downloads"></div>
-          <div
-            style="margin-top:12px;"
-            id="ls-detail--downloads-container"
-          ></div>
-          <button class="ls-detail--downloads-update"></button>
-        </div>
-      </div>
-      <div class="ls-content">
-        <ul class="ls-alphabet">
-          <li
-            class="ls-store -selected -initial"
-            onmousedown="storeSelect(this,'ALL')"
-          >
-            <button>ALL</button>
-          </li>
-          <li class="ls-store" onmousedown="storeSelect(this,'US')">
-            <button>US</button>
-          </li>
-          <li class="ls-store" onmousedown="storeSelect(this,'EU')">
-            <button>EU</button>
-          </li>
-          <li class="ls-store" onmousedown="storeSelect(this,'JP')">
-            <button>JP</button>
-          </li>
-          <li class="ls-store" onmousedown="storeSelect(this,'HK')">
-            <button>HK</button>
-          </li>
-          <li
-            style="width:40px;padding-left:20px;padding-right:10px;"
-            onmousedown="nativePrompt(localeMap['search'], function(result) {});"
-          >
-            <button class="ls-alphabet--search">&nbsp;</button>
-          </li>
-        </ul>
-        <ul
-          class="ls-alphabet"
-          style="margin-left: 10px;"
-          onmousedown="alphabetSelect(event) "
-        >
-          <li><button>#</button></li>
-          <li><button>A</button></li>
-          <li><button>B</button></li>
-          <li><button>C</button></li>
-          <li><button>D</button></li>
-          <li><button>E</button></li>
-          <li><button>F</button></li>
-          <li><button>G</button></li>
-          <li><button>H</button></li>
-          <li><button>I</button></li>
-          <li><button>J</button></li>
-          <li><button>K</button></li>
-          <li><button>L</button></li>
-          <li><button>M</button></li>
-          <li><button>N</button></li>
-          <li><button>O</button></li>
-          <li><button>P</button></li>
-          <li><button>Q</button></li>
-          <li><button>R</button></li>
-          <li><button>S</button></li>
-          <li><button>T</button></li>
-          <li><button>U</button></li>
-          <li><button>V</button></li>
-          <li><button>W</button></li>
-          <li><button>X</button></li>
-          <li><button>Y</button></li>
-          <li><button>Z</button></li>
-        </ul>
-        <ul
-          style="padding-left:20px;"
-          class="ls-alphabet -filters ls-native-filters--list"
-        >
-          <li><button filter="C00">C00</button></li>
-          <li><button filter="Demo">Demo</button></li>
-          <li><button filter="DLC">DLC</button></li>
-          <!-- <li><button filter="EDAT">EDAT</button></li> -->
-          <!-- <li><button filter="Mini">Mini</button></li> -->
-          <li><button filter="PS1">PS1</button></li>
-          <li><button filter="PS2">PS2</button></li>
-          <li><button filter="PSN">PSN</button></li>
-          <!-- <li><button filter="PSP">PSP</button></li> -->
-          <!-- <li><button filter="PSVita">PSVita</button></li> -->
-        </ul>
-        <ul id="ls-grid-games" class="ls-grid-games"></ul>
-        <div class="ls-navigation">
-          <button id="ls-prev">◀</button>
-          <button id="ls-current-page" style="text-align:center;">1/20</button>
-          <button id="ls-next" style="float: right; text-align: right;">
-            ▶
-          </button>
-        </div>
-      </div>
-    </div>
-    <div id="ls-native-prompt" class="ls-native-prompt">
-      <div class="ls-native-prompt--content">
-        <input
-          type="text"
-          id="ls-native-prompt--input"
-          class="ls-native-prompt--input"
-          autofocus
-          tabindex="0"
-        />
-        <button onmousedown="onSearchChange()" class="ls-native-prompt--button">
-          OK
-        </button>
-      </div>
-    </div>
-    <div id="ld-native-confirm" class="ld-native-confirm">
-      <div class="ls-background-image" style="display:block;">
+    <div class="mainc">
+      <!-- <div class="ls-background-image">
         <img
           src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAASCAMAAAANFixgAAAAPFBMVEVUYWc6R1pCVmRicHZ+dn+gfZewk6hFY2xQbnuSiZBhgIlripB7l56Qp6ulsrQzO1AvMkcqK0AlJDkeHC8JxtK6AAAAvElEQVR4AQXBQVICQRRAsbzGLlgJev9TzgoKmW+SAiewnFxSYGQB+3V7ss51cmn/BUNXQG/spwvZPmC+dH1veN0WvK7S50vwvND1vSErJhIBQ2uy0QqEBAyF2FkQERpQ3w60swARgO4Nh+zAOlnnQoa6Zzi0BTA9b4B39zXGQTYNbwA4e2QMBwIMAPWIYTgAvgFw9FiGaRiAAJh+AsMAmqZpgulnwWAaAECc/QYMAAwizh6XgWHQxABiff4BAhtKw4+y7scAAAAASUVORK5CYII="
         />
+      </div> -->
+      <div id="ls-logo" class="ls-logo" onmousedown="skipIntro()">
+        <div class="ls-logo--image ls-logo--image-logo">
+          <img src="img/xmb/localstore-app.png" width="400" />
+        </div>
+        <div class="ls-logo--image ls-logo--image-gamepad">
+          <img src="img/app/localstore-gamepad-intro.png" width="400" />
+        </div>
+        <div class="ls-logo--options">
+          <hr />
+          <span>ⓧ SKIP</span>
+        </div>
       </div>
-      <div class="ls-native-confirm--caption">
-        <img src="img/app/localstore-logo.png" width="400" />
-        <p></p>
+      <div id="ls-main" class="ls-main">
+        <div class="ls-detail">
+          <div class="ls-detail--image">
+            <img
+              id="ls-detail--image"
+              src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
+            />
+          </div>
+          <div class="ls-detail--content">
+            <div class="ls-detail--title">
+              <div class="ls-title" id="ls-title"></div>
+            </div>
+            <div class="ls-detail--description">
+              <div id="ls-info" class="ls-info"></div>
+            </div>
+          </div>
+          <div class="ls-detail--downloads">
+            <button
+              class="ls-detail--downloads-update"
+              onclick="showFileManager()"
+            >
+              <img
+                src="/public/img/xmb/localstore-games.png"
+                height="100"
+                style="position: relative; top:-10px;"
+              />
+              <span id="i18-fileManager" style="font-size:16px;"></span>
+            </button>
+            <div class="ls-description" id="i18-downloads"></div>
+            <div
+              style="margin-top:12px;"
+              id="ls-detail--downloads-container"
+            ></div>
+          </div>
+        </div>
+        <div class="ls-content">
+          <ul class="ls-alphabet">
+            <li
+              class="ls-store -selected -initial"
+              onmousedown="storeSelect(this,'ALL')"
+            >
+              <button>ALL</button>
+            </li>
+            <li class="ls-store" onmousedown="storeSelect(this,'US')">
+              <button>US</button>
+            </li>
+            <li class="ls-store" onmousedown="storeSelect(this,'EU')">
+              <button>EU</button>
+            </li>
+            <li class="ls-store" onmousedown="storeSelect(this,'JP')">
+              <button>JP</button>
+            </li>
+            <li class="ls-store" onmousedown="storeSelect(this,'HK')">
+              <button>HK</button>
+            </li>
+            <li
+              style="width:40px;padding-left:20px;padding-right:10px;"
+              onmousedown="nativePrompt(localeMap['search'], function(result) {});"
+            >
+              <button class="ls-alphabet--search">&nbsp;</button>
+            </li>
+          </ul>
+          <ul
+            class="ls-alphabet"
+            style="margin-left: 10px;"
+            onmousedown="alphabetSelect(event) "
+          >
+            <li><button>#</button></li>
+            <li><button>A</button></li>
+            <li><button>B</button></li>
+            <li><button>C</button></li>
+            <li><button>D</button></li>
+            <li><button>E</button></li>
+            <li><button>F</button></li>
+            <li><button>G</button></li>
+            <li><button>H</button></li>
+            <li><button>I</button></li>
+            <li><button>J</button></li>
+            <li><button>K</button></li>
+            <li><button>L</button></li>
+            <li><button>M</button></li>
+            <li><button>N</button></li>
+            <li><button>O</button></li>
+            <li><button>P</button></li>
+            <li><button>Q</button></li>
+            <li><button>R</button></li>
+            <li><button>S</button></li>
+            <li><button>T</button></li>
+            <li><button>U</button></li>
+            <li><button>V</button></li>
+            <li><button>W</button></li>
+            <li><button>X</button></li>
+            <li><button>Y</button></li>
+            <li><button>Z</button></li>
+            <li style="padding-left:8px;">
+              <button>
+                <span style="font-size: 38px; color: #000; font-weight: bold;"
+                  >ø</span
+                >
+              </button>
+            </li>
+          </ul>
+          <ul
+            style="padding-left:20px;"
+            class="ls-alphabet -filters ls-native-filters--list"
+          >
+            <li><button filter="C00">C00</button></li>
+            <li><button filter="Demo">Demo</button></li>
+            <li><button filter="DLC">DLC</button></li>
+            <!-- <li><button filter="EDAT">EDAT</button></li> -->
+            <!-- <li><button filter="Mini">Mini</button></li> -->
+            <li><button filter="PS1">PS1</button></li>
+            <li><button filter="PS2">PS2</button></li>
+            <li><button filter="PSN">PSN</button></li>
+            <!-- <li><button filter="PSP">PSP</button></li> -->
+            <!-- <li><button filter="PSVita">PSVita</button></li> -->
+          </ul>
+          <ul id="ls-grid-games" class="ls-grid-games"></ul>
+          <div class="ls-navigation">
+            <button id="ls-prev">◀</button>
+            <button id="ls-current-page" style="text-align:center;">
+              1/20
+            </button>
+            <button id="ls-next" style="float: right; text-align: right;">
+              ▶
+            </button>
+          </div>
+        </div>
+      </div>
+      <div id="ls-native-prompt" class="ls-native-prompt">
+        <div class="ls-native-prompt--content">
+          <input
+            type="text"
+            id="ls-native-prompt--input"
+            class="ls-native-prompt--input"
+            autofocus
+            tabindex="0"
+          />
+          <button
+            onmousedown="onSearchChange()"
+            class="ls-native-prompt--button"
+          >
+            OK
+          </button>
+        </div>
+      </div>
+      <div id="ld-native-confirm" class="ld-native-confirm">
+        <!-- <div class="ls-background-image" style="display:block;">
+          <img
+            src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAASCAMAAAANFixgAAAAPFBMVEVUYWc6R1pCVmRicHZ+dn+gfZewk6hFY2xQbnuSiZBhgIlripB7l56Qp6ulsrQzO1AvMkcqK0AlJDkeHC8JxtK6AAAAvElEQVR4AQXBQVICQRRAsbzGLlgJev9TzgoKmW+SAiewnFxSYGQB+3V7ss51cmn/BUNXQG/spwvZPmC+dH1veN0WvK7S50vwvND1vSErJhIBQ2uy0QqEBAyF2FkQERpQ3w60swARgO4Nh+zAOlnnQoa6Zzi0BTA9b4B39zXGQTYNbwA4e2QMBwIMAPWIYTgAvgFw9FiGaRiAAJh+AsMAmqZpgulnwWAaAECc/QYMAAwizh6XgWHQxABiff4BAhtKw4+y7scAAAAASUVORK5CYII="
+          />
+        </div> -->
+        <div class="ls-native-confirm--caption">
+          <img src="img/xmb/localstore-app.png" width="400" />
+          <p></p>
+        </div>
       </div>
     </div>
-
     <script src="js/ls.app.js"></script>
+    <script>
+      setInterval(function() {
+        var a = window.getComputedStyle(document.body);
+        document.getElementById("ld-native-confirm").style.display = "none";
+        document.getElementById("ld-native-confirm").offsetHeight; // no need to store this anywhere, the reference is enough
+        document.getElementById("ld-native-confirm").style.display = "";
+      }, 100);
+    </script>
   </body>
 </html>

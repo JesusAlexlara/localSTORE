@@ -1,17 +1,21 @@
 {
   "name": "localstore",
-  "version": "1.0.0",
+  "version": "1.0.0-beta",
   "description": "",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
-    "pkg-copy-bases": "cp ./server/config.base.json ./server/config.json && cp ./server/downloads.base.json ./server/downloads.json && cp ./bdd/localstore-db.base.json ./bdd/localstore-db.json",
-    "pkg-osx": "electron-packager --prune=true --overwrite --out=../localSTORE-APPS --platform=darwin --icon=localstore.icns ./",
-    "pkg-x32": "electron-packager --prune=true --overwrite --out=../localSTORE-APPS --platform=win32 --arch=ia32 --icon=localstore.ico ./",
-    "pkg-x64": "electron-packager --prune=true --overwrite --out=../localSTORE-APPS --platform=win32 --arch=x64 --icon=localstore.ico ./",
-    "build": "npm run patchFsExtra && npm run clean && npm run pkg-osx && npm run pkg-x32 && npm run pkg-x64",
-    "patchFsExtra": "cp ./node_modules/fs-extra/lib/json/output-json-sync.js ./node_modules/fs-extra/lib/json/ls-json-sync.js && cp ./node_modules/fs-extra/lib/json/output-json.js ./node_modules/fs-extra/lib/json/ls-json.js && cp -R ./node_modules/fs-extra/lib/output ./node_modules/fs-extra/lib/ls-out",
-    "clean": "rm -f localSTORE.xmb && npm run pkg-copy-bases"
+    "build-ps3netsrv-darwin": "cd server/ps3netsrv/sources/darwin && make",
+    "pkg-osx": "npm run clean && electron-packager --ignore=\"___(pkg-installer|resources|server-src)\" --prune=true --overwrite --out=../localSTORE-APPS --platform=darwin --icon=localstore.icns ./",
+    "pkg-x32": "npm run clean && electron-packager --ignore=\"___(pkg-installer|resources|server-src)\" --prune=true --overwrite --out=../localSTORE-APPS --platform=win32 --arch=ia32 --icon=localstore.ico ./",
+    "pkg-x64": "npm run clean && electron-packager --ignore=\"___(pkg-installer|resources|server-src)\" --prune=true --overwrite --out=../localSTORE-APPS --platform=win32 --arch=x64 --icon=localstore.ico ./",
+    "clean": "cp ./server/config.base.json ./server/config.json && cp ./server/downloads.base.json ./server/downloads.json && cp ./bdd/localstore-db.base.json ./bdd/localstore-db.json && rm -rf ./server/raps && mkdir ./server/raps",
+    "build-public": "cd public/src && tsc",
+    "build-server": "cd ___server-src && tsc",
+    "build-public-watch": "cd public/src && tsc --watch",
+    "build-server-watch": "cd ___server-src && tsc --watch",
+    "build-source": "npm run build-public && npm run build-server",
+    "build-watch": "npm run build-public-watch & npm run build-server-watch"
   },
   "repository": "https://github.com/electron/electron-quick-start",
   "keywords": [
@@ -24,14 +28,24 @@
   "author": "GitHub",
   "license": "CC0-1.0",
   "devDependencies": {
-    "electron": "^4.1.4"
+    "@types/compression": "0.0.36",
+    "@types/express": "^4.16.1",
+    "@types/fs-extra": "^7.0.0",
+    "@types/ip": "^1.1.0",
+    "@types/jsonpath": "^0.2.0",
+    "@types/node": "^12.0.2",
+    "@types/node-downloader-helper": "^1.0.0",
+    "electron": "^4.1.4",
+    "typescript": "^3.4.5"
   },
   "dependencies": {
     "compression": "^1.7.4",
     "csvtojson": "^2.0.8",
     "electron-photon": "^1.1.6",
+    "evilscan": "^1.7.5",
     "express": "^4.16.4",
     "fs-extra": "7.0.1",
+    "ip": "^1.1.5",
     "jsonpath": "^1.0.1",
     "jsonpath-plus": "^0.18.0",
     "move-file": "^1.2.0",
@@ -39,9 +53,9 @@
     "node-downloader-helper": "^1.0.10",
     "node-wget": "^0.4.3",
     "request": "^2.88.0",
+    "tree-kill": "^1.2.1",
     "unzipper": "^0.9.11",
-    "whatwg-fetch": "^3.0.0",
-    "ip": "^1.1.5"
+    "whatwg-fetch": "^3.0.0"
   },
   "productName": "localstore"
 }
