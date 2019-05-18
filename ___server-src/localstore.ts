@@ -137,7 +137,6 @@ function pkgTargetSelected(event: Event) {
   }
   config.packagesFolder = folder[0];
 
-  checkResignerFolders(folder[0]);
   updateUIStatus();
   writeConfig();
   reloadServer();
@@ -181,13 +180,6 @@ function selectIdps() {
     fsExtra.copySync(idpsFile[0], userData + "/idps.hex");
     updateUIStatus();
   }
-}
-
-function checkResignerFolders(folder: string) {
-  fsExtra.ensureDirSync(path.resolve(folder, "resigner/consoles/default"));
-  fsExtra.ensureDirSync(path.resolve(folder, "resigner/input/pkgs"));
-  fsExtra.ensureDirSync(path.resolve(folder, "resigner/input/raps"));
-  fsExtra.ensureDirSync(path.resolve(folder, "resigner/output/pkgs"));
 }
 
 function forceDatabaseReload() {

@@ -42,7 +42,7 @@
     "es": {
         "app": {
             "storage": "Almacén",
-            "storage-alt": "ⓧ Selecciona dónde almacenar los archivos descargados",
+            "storage-alt": "ⓧ Selecciona dónde almacenar los Juegos descargados",
             "port-alt": "ⓧ Configura el puerto del servidor web",
             "update": "Actualiza",
             "update-alt": "ⓧ Actualiza la base de datos psndl y las portadas",
@@ -65,9 +65,9 @@
                 "manage-content-title": "Administra Contenido Descargado",
                 "manage-content-info": " Requiere HEN habilitado",
                 "localstore-shortcuts-title": "Acceso rápido",
-                "localstore-shortcuts-info": " Accede rápidamente a tus paquetes preferidos",
+                "localstore-shortcuts-info": " Accede rápidamente a tus PKG's preferidos",
                 "han-reboot-title": "Reinicio",
-                "han-reboot-info": " reinicio suave de la consola",
+                "han-reboot-info": " reinicio rápido de la consola",
                 "changelog": "Presiona  para ver el registro de cambios"
             }
         },
@@ -94,20 +94,20 @@
             "yes": "oui",
             "no": "no",
             "confirm": "Confirmer",
-            "error-pending-downloads": "Il y a des fichiers en cours de téléchargement. Êtes-vous sûr de vouloir partir?"
+            "error-pending-downloads": "Il y a des fichiers en cours de téléchargement. Êtes-vous sûr de quitter le logiciel?"
         },
         "xmb": {
             "localstore": {
-                "localstore-title": " localSTORE Boutique",
+                "localstore-title": " Boutique localSTORE",
                 "localstore-info": "",
                 "setup-server-title": "Configurez le serveur",
                 "setup-server-info": " mettre à jour les paramètres du serveur",
-                "manage-content-title": "Utilitaires de la bibliothèque",
+                "manage-content-title": "Utilitaires de la bibliothèque de jeux",
                 "manage-content-info": " supprimer et  re-signer les paquets",
                 "localstore-shortcuts-title": "Accès rapide",
                 "localstore-shortcuts-info": " Accédez rapidement à vos packages préférés",
                 "han-reboot-title": "Redémarrer",
-                "han-reboot-info": " redémarrage progressif de la console",
+                "han-reboot-info": " redémarrage de la console",
                 "changelog": "Appuyez sur  pour accéder au journal des modifications"
             }
         },
