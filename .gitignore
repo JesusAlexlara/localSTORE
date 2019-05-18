@@ -6,3 +6,4 @@ server/downloads.json
 Thumbs.db
 Thumbs.db:encryptable
 .DS_store
+.vscode
