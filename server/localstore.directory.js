@@ -15,7 +15,6 @@ var appLocale = app.getLocale().substr(0, 2);
 var localeMap = locales[avaliableLocales.includes(appLocale) ? appLocale : defaultLocale];
 var lsFileRegexp = /\[(.+?)\]-\[(ALL|US|EU|JP|HK)-(PS1|PS2|PS3|PSN|DEMO|C00|DLC|EDAT|MINI)\]-\[(([A-Z0-9]{6})-([A-Z0-9]{9})_[A-Z0-9]{2}-(.+?))\]-\[0x([0-9A-F]{32})\]/;
 function getLocalStorePkgs(ip, folder, localstoreDb) {
-    console.log("getlocal", ip);
     folder = path_1.default.resolve(__dirname, folder);
     return fs_1.default
         .readdirSync(folder)

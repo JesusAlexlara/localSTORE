@@ -25,7 +25,7 @@ function createWindow() {
   // Create the browser window.
   console.log("process.platform", process.platform);
   mainWindow = new BrowserWindow({
-    width: 760,
+    width: 600,
     height: process.platform !== "darwin" ? 218 : 210,
     resizable: false,
     titleBarStyle: "customButtonsOnHover",

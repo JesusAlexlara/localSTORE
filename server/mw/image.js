@@ -77,6 +77,9 @@ function xmbGameIcon(_a) {
 exports.xmbGameIcon = xmbGameIcon;
 // image proxy middleware
 function imageProxy(req, res) {
+    if (!localstoreDb) {
+        localstoreDb = localstore_db_1.getLocalStoreDb();
+    }
     var _a = req.query, productCode = _a.productCode, compact = _a.compact, signed = _a.signed;
     if (!productCode) {
         res.send({ error: "No image productCode provided" });

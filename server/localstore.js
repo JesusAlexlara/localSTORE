@@ -29,8 +29,6 @@ var serverRunning = false;
 var ps3netsrvRunning = false;
 var serverInstance;
 var $;
-var isActFilePresent = hasActFile();
-var isIdpsFilePresent = hasIdpsFile();
 function getServerIp(cb) {
     cb(ip.address());
 }
@@ -45,7 +43,7 @@ function writeConfig() {
     fs_1.default.writeFileSync(configPath, JSON.stringify(config), "utf8");
 }
 function startServer(startServerCallback) {
-    if (!serverRunning && isActFilePresent && isIdpsFilePresent) {
+    if (!serverRunning) {
         localstore_server_1.localstoreServer(function (app, serverConfig) {
             serverInstance = app;
             var port = serverConfig.port;
@@ -85,7 +83,10 @@ function usbTargetSelected(event) {
     // create main localSTORE folder
     var localSTOREFolder = path_1.default.resolve(usbFolder[0], "localSTORE");
     fs_extra_1.default.ensureDirSync(localSTOREFolder);
-    ncp(path_1.default.resolve(__dirname, "../pkgs"), path_1.default.resolve(localSTOREFolder, "update"), function () {
+    // create main localSTORE folder
+    var favsFolder = path_1.default.resolve(usbFolder[0], "localSTORE/favs");
+    fs_extra_1.default.ensureDirSync(favsFolder);
+    ncp(path_1.default.resolve(__dirname, "../installer"), path_1.default.resolve(path_1.default.resolve(usbFolder[0])), function () {
         ncp(path_1.default.resolve(__dirname, "../public/img/xmb"), path_1.default.resolve(usbFolder[0] + "/localSTORE/xmb"), function () {
             fs_1.default.writeFileSync(path_1.default.resolve(usbFolder[0] + "/localSTORE/localSTORE.xmb"), localstore_xmb_1.getXMBRootXML(), "utf8");
             $.output.innerHTML = localeMap.app["usb-ready"];
@@ -96,49 +97,6 @@ function usbTargetSelected(event) {
             updateUIStatus();
         });
     });
-    // ncp.limit = 16;
-    // ncp(path.resolve(__dirname, "pkgs"), path.resolve(usbFolder[0]), function(
-    //   err: any
-    // ) {
-    //   ncp(
-    //     path.resolve(__dirname, "public/img/xmb"),
-    //     path.resolve(usbFolder[0] + "/localSTORE"),
-    //     function(err: any) {
-    //       if (err) {
-    //         return console.error(err);
-    //       }
-    //       getXMB(readConfig(), require("./bdd/localstore-db.json")).then(
-    //         (storeItemsXML: string) => {
-    //           const xml = getPackageLink(
-    //             readConfig(),
-    //             require("./bdd/localstore-db.json")
-    //           );
-    //           fs.writeFileSync(
-    //             path.resolve(usbFolder[0] + "/localSTORE.xmb"),
-    //             storeItemsXML,
-    //             "utf8"
-    //           );
-    //           fs.writeFileSync(
-    //             path.resolve(usbFolder[0] + "/localSTORE.xml"),
-    //             xml,
-    //             "utf8"
-    //           );
-    //           fs.writeFileSync(
-    //             path.resolve(usbFolder[0] + "/package_link.xml"),
-    //             xml.replace('id="localSTORE_main"', 'id="package_link"'),
-    //             "utf8"
-    //           );
-    //           $.output.innerHTML = localeMap.app["usb-ready"];
-    //           $.output.style.display = "block";
-    //           setTimeout(() => {
-    //             $.output.style.display = "none";
-    //           }, 3500);
-    //           updateUIStatus();
-    //         }
-    //       );
-    //     }
-    //   );
-    // });
 }
 function pkgTargetSelected(event) {
     var folder = dialog.showOpenDialog({
@@ -164,12 +122,6 @@ function ps3netsrvTargetSelected(event) {
     updatePS3NetServUIStatus();
     writeConfig();
     updatePs3netsrvPort();
-}
-function hasActFile() {
-    return fs_extra_1.default.existsSync(app.getPath("userData") + "/act.dat");
-}
-function hasIdpsFile() {
-    return fs_extra_1.default.existsSync(app.getPath("userData") + "/idps.hex");
 }
 function selectAct() {
     var actFile = dialog.showOpenDialog({
@@ -216,8 +168,8 @@ function initializeSelectors() {
         serverPort: document.getElementById("ls-server-port"),
         output: document.getElementById("ls-initialize-output"),
         address: document.getElementById("ls-port-output"),
-        setAct: document.getElementById("ls-set-act"),
-        setIdps: document.getElementById("ls-set-idps"),
+        // setAct: document.getElementById("ls-set-act"),
+        // setIdps: document.getElementById("ls-set-idps"),
         body: document.body,
         i18nTitles: document.querySelectorAll("[i18n-title]"),
         i18n: document.querySelectorAll("[i18n]"),
@@ -273,8 +225,8 @@ function initializeEvents() {
             updateServerPort();
         }
     });
-    $.setAct.addEventListener("click", selectAct);
-    $.setIdps.addEventListener("click", selectIdps);
+    // $.setAct.addEventListener("click", selectAct);
+    // $.setIdps.addEventListener("click", selectIdps);
     $.ps3netservPort.addEventListener("blur", updatePs3netsrvPort);
     $.ps3netservPort.addEventListener("keyup", function (event) {
         if (event.key === "Enter") {
@@ -325,17 +277,8 @@ function initializeUI() {
     updateUIStatus();
 }
 function updateUIStatus() {
-    isActFilePresent = hasActFile();
-    isIdpsFilePresent = hasIdpsFile();
-    $.setAct.querySelector("svg").style.color = isActFilePresent
-        ? "#32e819"
-        : "#ff7c7c";
-    $.setIdps.querySelector("svg").style.color = isIdpsFilePresent
-        ? "#32e819"
-        : "#ff7c7c";
     $.serverPort.value = config.port;
-    $.onOff.style.display =
-        isActFilePresent && isIdpsFilePresent ? "block" : "none";
+    $.onOff.style.display = "block";
 }
 function updatePS3NetServUIStatus() {
     $.ps3netservPort.value = config.ps3netservPort;

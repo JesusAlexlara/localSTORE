@@ -7,7 +7,6 @@ var fs_1 = __importDefault(require("fs"));
 var move_file_1 = __importDefault(require("move-file"));
 var node_downloader_helper_1 = require("node-downloader-helper");
 var path_1 = __importDefault(require("path"));
-var localstore_resigner_1 = require("../localstore.resigner");
 var localstore_utils_1 = require("../localstore.utils");
 var webman_api_1 = require("../webman.api");
 exports.downloadGlobal = {};
@@ -116,48 +115,10 @@ function removeDownloadedFile(_a, dl) {
         return download.url !== url;
     });
     fs_1.default.writeFileSync(path_1.default.resolve(__dirname, serverConfig.pendingDownloads), JSON.stringify({ downloads: filtered }, null, 4));
-    switch (type) {
-        case "PS1":
-        case "PS2":
-            dl.πresigner = 1;
-            localstore_resigner_1.resignPkg(fileName, rap, contentId, serverConfig.downloadTmpDir).then(function (_a) {
-                var stderr = _a.stderr, stdout = _a.stdout;
-                stdout;
-                if (!stderr) {
-                    var signedFile = fileName.replace(".pkg", ".pkg_signed.pkg");
-                    // const signedRapFile = fileName.replace(
-                    //   ".pkg",
-                    //   ".rif.pkg_signed.pkg"
-                    // );
-                    move_file_1.default.sync(path_1.default.resolve(serverConfig.packagesFolder, "resigner/input/pkgs/", fileName), path_1.default.resolve(__dirname, serverConfig.packagesFolder, fileName));
-                    move_file_1.default.sync(path_1.default.resolve(serverConfig.packagesFolder, "resigner/output/pkgs/", signedFile), path_1.default.resolve(__dirname, serverConfig.packagesFolder, signedFile));
-                    // moveFile.sync(
-                    //   path.resolve(
-                    //     serverConfig.packagesFolder,
-                    //     "resigner/output/pkgs/",
-                    //     signedRapFile
-                    //   ),
-                    //   path.resolve(
-                    //     __dirname,
-                    //     serverConfig.packagesFolder,
-                    //     signedRapFile
-                    //   )
-                    // );
-                    dl.πresigner = 2;
-                    notifyDownloadCompleted(dl.πremoteIp, dl.πname, dl.πcontentId);
-                    // downloadRapToUsb(dl.πremoteIp, ap, contentId);
-                    flushDownloads();
-                }
-            });
-            break;
-        default:
-            move_file_1.default.sync(path_1.default.resolve(__dirname, "..", serverConfig.downloadTmpDir, fileName), path_1.default.resolve(__dirname, serverConfig.packagesFolder, fileName));
-            dl.πresigner = 2;
-            notifyDownloadCompleted(dl.πremoteIp, dl.πname, dl.πcontentId);
-            // downloadRapToUsb(dl.πremoteIp, ap, contentId);
-            flushDownloads();
-            break;
-    }
+    move_file_1.default.sync(path_1.default.resolve(__dirname, "..", serverConfig.downloadTmpDir, fileName), path_1.default.resolve(__dirname, serverConfig.packagesFolder, fileName));
+    dl.πresigner = 2;
+    notifyDownloadCompleted(dl.πremoteIp, dl.πname, dl.πcontentId);
+    flushDownloads();
 }
 exports.removeDownloadedFile = removeDownloadedFile;
 function downloadRapToUsb(ip, rap, contentId) {

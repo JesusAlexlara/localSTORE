@@ -6,9 +6,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var jsonpath_1 = __importDefault(require("jsonpath"));
 var localstore_db_1 = require("../localstore.db");
 var localstore_statics_1 = require("../localstore.statics");
-var localstoreDb = localstore_db_1.getLocalStoreDb();
+var localstoreDb;
 // Seach Middleware
 function search(req, res) {
+    localstoreDb = localstore_db_1.getLocalStoreDb();
+    console.log(localstoreDb);
     if (req.query.data) {
         var searchState = JSON.parse(Buffer.from(req.query.data, "base64").toString());
         var isFullSearch = searchState.query.length > 1;

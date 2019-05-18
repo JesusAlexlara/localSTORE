@@ -8,14 +8,16 @@ const locales: { [key: string]: { [key: string]: string } } = {
     "hold-to-download": "Hold ⓧ to download",
     "confirm-cancel-download": "Are you sure to cancel this download?",
     search: "Search",
-    remove: "ⓧ REMOVE"
+    remove: "ⓧ REMOVE",
+    fileManager: "File Manager"
   },
   es: {
     downloads: "Descargas",
     "hold-to-download": "Mantenga ⓧ para descargar",
     "confirm-cancel-download": "¿Está seguro de cancelar esta descarga?",
     search: "Buscar",
-    remove: "ⓧ CANCELAR"
+    remove: "ⓧ CANCELAR",
+    fileManager: "Contenido Descargado"
   },
   fr: {
     downloads: "Téléchargements",
@@ -23,7 +25,8 @@ const locales: { [key: string]: { [key: string]: string } } = {
     "confirm-cancel-download":
       "Êtes-vous sûr de vouloir annuler ce téléchargement?",
     search: "Recherche",
-    remove: "ⓧ ANNULER"
+    remove: "ⓧ ANNULER",
+    fileManager: "Contenu téléchargé"
   }
 };
 
@@ -38,7 +41,7 @@ const uiState: {
   alphabetLastSelect: HTMLElement | null;
   storeLastSelect: HTMLElement;
   imageSource: Array<HTMLImageElement>;
-  games: Array<any>;
+  games: Array<any>; 
   response: any;
 } = {
   alphabetLastSelect: null,
@@ -318,7 +321,14 @@ function updateDetail(index: number) {
     "/image-proxy?productCode=" + game.productCode
   );
   $.detailTitle.textContent = game.name;
-  $.detailInfo.textContent = game.description;
+  $.detailInfo.innerHTML =
+    game.region +
+    " | " +
+    game.type +
+    " | " +
+    game.contentId +
+    "<br/><br/>" +
+    game.description;
 }
 
 function initializeContents() {
@@ -378,10 +388,12 @@ function main() {
     currentPage: selectId("ls-current-page"),
     filters: querySelector(".ls-native-filters--list"),
     downloadsContainer: selectId("ls-detail--downloads-container"),
-    downloadsTitle: selectId("i18-downloads")
+    downloadsTitle: selectId("i18-downloads"),
+    fileManager: selectId("i18-fileManager")
   };
 
   $.downloadsTitle.innerHTML = localeMap["downloads"];
+  $.fileManager.innerHTML = localeMap["fileManager"];
   initializeContents();
   initializeEvents();
   // force fullscreen

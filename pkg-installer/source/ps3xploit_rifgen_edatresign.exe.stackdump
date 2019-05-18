@@ -1,9 +1,0 @@
-Exception: STATUS_ACCESS_VIOLATION at eip=6115DAA1
-eax=17119CC1 ebx=00000001 ecx=17119CC1 edx=17119CC1 esi=00000000 edi=17119CC1
-ebp=0022B528 esp=0022B524 program=Y:\localSTORE\pkg-installer\source\ps3xploit_rifgen_edatresign.exe, pid 3440, thread main
-cs=001B ds=0023 es=0023 fs=003B gs=0000 ss=0023
-Stack trace:
-Frame     Function  Args
-0022B528  6115DAA1 (17119CC1, 0022B5E8, 00441293, 00000001)
-0022B664  6117A6DF (0000000F, 00130000, 00000007, 004F0000)
-End of stack trace

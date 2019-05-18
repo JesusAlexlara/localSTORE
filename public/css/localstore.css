@@ -8,7 +8,7 @@ body {
   width: 100%;
   height: 100;
   overflow: hidden;
-  background-color: #206ee3;
+  background-color: #444;
   font-family: "Roboto", sans-serif;
   color: #ccc;
   overflow: hidden;
@@ -296,6 +296,7 @@ img[src=""] {
   margin-bottom: 16px;
   color: #fff;
   font-size: 24px;
+  line-height: 62px;
 }
 .ls-detail--downloads-update img {
   display: inline-block;
@@ -307,6 +308,10 @@ img[src=""] {
   max-height: 264px;
   overflow: hidden;
   overflow-y: scroll;
+}
+
+#ls-detail--downloads-container::-webkit-scrollbar {
+  display: none;
 }
 
 .ls-progress-bar {
@@ -330,14 +335,14 @@ img[src=""] {
 .ls-progress-bar:hover::after {
   content: attr(caption);
   position: absolute;
-  left: -104px;
+  right: 0px;
   top: -8px;
   background-color: #000;
   font-size: 14px;
   -webkit-border-radius: 10px;
   padding: 4px;
   padding-left: 8px;
-  color: white;
+  color: #f00;
   font-weight: bold;
   padding-right: 8px;
 }
