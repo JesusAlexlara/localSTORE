@@ -185,9 +185,23 @@ function getChangelogMenu() {
 ・ Many thanks to @_TheCYB3R_ and @NanospeedGamer for Help & Testing
 
 ★ localSTORE Features
+
+・ Entry in GAME menu, based on HEN 2.1.0 category_game.xml
 ・ Browse, Download Games & Install Rap files directly in your PS3 Browser
 ・ Integrated ps3netsrv
-・ Entry in GAME menu, based on HEN 2.1.0 category_game.xml
+・ EN/ES/FR
+
+★ Instructions
+
+・ Navigate to localSTORE XMB Menu
+・ Open localSTORE "Browser", choose, hold (X) to start download
+・ Once completed, goto "localGAMES"
+・ Select game, click in options (INSTALL / RAP /DELETE)
+・ Installation order is **IMPORTANT**
+   1. Enable HEN
+   2. Install RAP to USB/HDD
+   3. Install Game
+   4. Open Game 
 </String></Pair>
         </Table>
     </Attributes>
