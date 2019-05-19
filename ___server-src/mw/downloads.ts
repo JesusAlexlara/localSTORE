@@ -4,7 +4,8 @@ import { DownloaderHelper } from "node-downloader-helper";
 import path from "path";
 import {
   DownloaderHelperExtension,
-  PendingDownload
+  PendingDownload,
+  ServerConfig
 } from "../localstore.types";
 import { byteHelper, readConfig } from "../localstore.utils";
 import { webmanAPI, webmanProxy } from "../webman.api";
@@ -13,9 +14,10 @@ import express = require("express");
 
 export const downloadGlobal: { [key: string]: any } = {};
 
-let serverConfig = readConfig();
+let serverConfig: ServerConfig;
 // PKG DOWNLOADS
 export function getPendingDownloads(): { downloads: Array<PendingDownload> } {
+  serverConfig = readConfig();
   return JSON.parse(
     fs.readFileSync(
       path.resolve(__dirname, "..", serverConfig.pendingDownloads),
@@ -37,6 +39,7 @@ export function addDownload(
   }: PendingDownload,
   cb: Function
 ) {
+  serverConfig = readConfig();
   const pendingDownloads = getPendingDownloads().downloads;
   if (
     pendingDownloads.filter((download: PendingDownload) => {
@@ -72,6 +75,7 @@ export function addDownload(
 }
 
 export function removeDownload(contentId: string, cb: Function) {
+  serverConfig = readConfig();
   downloadGlobal[contentId].stop();
   delete downloadGlobal[contentId];
   const pendingDownloads = getPendingDownloads().downloads.filter(function(
@@ -99,7 +103,7 @@ export function downloadFile(
   }: PendingDownload,
   cb?: Function
 ) {
-  console.log("dl", path.resolve(__dirname, "..", serverConfig.downloadTmpDir));
+  serverConfig = readConfig();
   const dl = (new DownloaderHelper(
     url,
     path.resolve(__dirname, "..", serverConfig.downloadTmpDir),
@@ -168,6 +172,7 @@ export function removeDownloadedFile(
   { fileName, url, contentId, name, rap, type, region }: PendingDownload,
   dl: any
 ) {
+  serverConfig = readConfig();
   const currentDownloads = getPendingDownloads();
   const filtered = currentDownloads.downloads.filter(download => {
     return download.url !== url;
@@ -237,10 +242,8 @@ export function getProgressResponse(
       },
       {}
     );
-    console.log("algo", progress);
     res.status(200).send(progress);
   } else {
-    console.log("nada");
     res.status(200).send({});
   }
 }
