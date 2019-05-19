@@ -17,16 +17,12 @@
     "build-source": "npm run build-public && npm run build-server",
     "build-watch": "npm run build-public-watch & npm run build-server-watch"
   },
-  "repository": "https://github.com/electron/electron-quick-start",
+  "repository": "https://github.com/xps3riments/localSTORE",
   "keywords": [
-    "Electron",
-    "quick",
-    "start",
-    "tutorial",
-    "demo"
+    ""
   ],
   "author": "GitHub",
-  "license": "CC0-1.0",
+  "license": "MIT",
   "devDependencies": {
     "@types/compression": "0.0.36",
     "@types/express": "^4.16.1",
@@ -41,21 +37,18 @@
   "dependencies": {
     "compression": "^1.7.4",
     "csvtojson": "^2.0.8",
-    "electron-photon": "^1.1.6",
     "evilscan": "^1.7.5",
     "express": "^4.16.4",
     "fs-extra": "7.0.1",
     "ip": "^1.1.5",
     "jsonpath": "^1.0.1",
-    "jsonpath-plus": "^0.18.0",
     "move-file": "^1.2.0",
     "ncp": "^2.0.0",
     "node-downloader-helper": "^1.0.10",
     "node-wget": "^0.4.3",
     "request": "^2.88.0",
     "tree-kill": "^1.2.1",
-    "unzipper": "^0.9.11",
-    "whatwg-fetch": "^3.0.0"
+    "unzipper": "^0.9.11"
   },
   "productName": "localstore"
 }
