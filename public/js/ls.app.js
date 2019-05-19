@@ -240,7 +240,6 @@ function update() {
             parent.setAttribute("region", game.region);
             parent.setAttribute("type", game.type);
             parent.setAttribute("hold", localeMap["hold-to-download"]);
-            console.log(game.cover);
             parent.setAttribute("class", game.cover === null ? "-nocover" : "");
         });
         updateDetail(0);

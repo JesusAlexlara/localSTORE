@@ -16,7 +16,6 @@ exports.webmanAPI = {
     openXMBItem: function (ip, col, segment) {
         if (col === void 0) { col = "game"; }
         if (segment === void 0) { segment = ""; }
-        console.log("http://" + ip + "/play.ps3?col=" + col + "&seg=" + segment);
         return "http://" + ip + "/play.ps3?col=" + col + "&seg=" + segment;
     },
     focusIndex: function (ip) {
@@ -26,14 +25,12 @@ exports.webmanAPI = {
         return "http://" + ip + "/browser.ps3$open_list";
     },
     downloadRap: function (ip, rap, contentId) {
-        // /download.ps3?to=<path>&url=<url> -
         var config = readConfig();
         return "http://" + ip + "/download.ps3?to=/dev_usb000/extdata&url=http://" + config.ip + ":" + config.port + "/rap?rap=" + rap + "&contentId=" + contentId;
     }
 };
 exports.webmanProxy = {
     proxy: function (url) {
-        console.log(url);
         return new Promise(function (resolve, reject) {
             request(url, function () {
                 resolve();

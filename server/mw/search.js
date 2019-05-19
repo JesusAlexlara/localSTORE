@@ -10,7 +10,6 @@ var localstoreDb;
 // Seach Middleware
 function search(req, res) {
     localstoreDb = localstore_db_1.getLocalStoreDb();
-    console.log(localstoreDb);
     if (req.query.data) {
         var searchState = JSON.parse(Buffer.from(req.query.data, "base64").toString());
         var isFullSearch = searchState.query.length > 1;

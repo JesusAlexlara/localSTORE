@@ -10,14 +10,16 @@ var path_1 = __importDefault(require("path"));
 var localstore_utils_1 = require("../localstore.utils");
 var webman_api_1 = require("../webman.api");
 exports.downloadGlobal = {};
-var serverConfig = localstore_utils_1.readConfig();
+var serverConfig;
 // PKG DOWNLOADS
 function getPendingDownloads() {
+    serverConfig = localstore_utils_1.readConfig();
     return JSON.parse(fs_1.default.readFileSync(path_1.default.resolve(__dirname, "..", serverConfig.pendingDownloads), "utf8"));
 }
 exports.getPendingDownloads = getPendingDownloads;
 function addDownload(_a, cb) {
     var fileName = _a.fileName, url = _a.url, contentId = _a.contentId, name = _a.name, rap = _a.rap, type = _a.type, region = _a.region, remoteIp = _a.remoteIp;
+    serverConfig = localstore_utils_1.readConfig();
     var pendingDownloads = getPendingDownloads().downloads;
     if (pendingDownloads.filter(function (download) {
         download.url === url;
@@ -40,6 +42,7 @@ function addDownload(_a, cb) {
 }
 exports.addDownload = addDownload;
 function removeDownload(contentId, cb) {
+    serverConfig = localstore_utils_1.readConfig();
     exports.downloadGlobal[contentId].stop();
     delete exports.downloadGlobal[contentId];
     var pendingDownloads = getPendingDownloads().downloads.filter(function (pending) {
@@ -51,7 +54,7 @@ function removeDownload(contentId, cb) {
 exports.removeDownload = removeDownload;
 function downloadFile(_a, cb) {
     var fileName = _a.fileName, url = _a.url, contentId = _a.contentId, name = _a.name, rap = _a.rap, type = _a.type, region = _a.region, remoteIp = _a.remoteIp;
-    console.log("dl", path_1.default.resolve(__dirname, "..", serverConfig.downloadTmpDir));
+    serverConfig = localstore_utils_1.readConfig();
     var dl = new node_downloader_helper_1.DownloaderHelper(url, path_1.default.resolve(__dirname, "..", serverConfig.downloadTmpDir), {
         override: true,
         fileName: fileName
@@ -110,6 +113,7 @@ function downloadFile(_a, cb) {
 exports.downloadFile = downloadFile;
 function removeDownloadedFile(_a, dl) {
     var fileName = _a.fileName, url = _a.url, contentId = _a.contentId, name = _a.name, rap = _a.rap, type = _a.type, region = _a.region;
+    serverConfig = localstore_utils_1.readConfig();
     var currentDownloads = getPendingDownloads();
     var filtered = currentDownloads.downloads.filter(function (download) {
         return download.url !== url;
@@ -160,11 +164,9 @@ function getProgressResponse(req, res) {
             }
             return acc;
         }, {});
-        console.log("algo", progress);
         res.status(200).send(progress);
     }
     else {
-        console.log("nada");
         res.status(200).send({});
     }
 }
