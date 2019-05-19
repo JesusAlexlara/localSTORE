@@ -27,7 +27,6 @@ export function getPS3Ip() {
     });
 
     scanner.on("done", function() {
-      console.log("err", results);
       if (results) {
         resolve(results);
         return;
@@ -38,6 +37,3 @@ export function getPS3Ip() {
     scanner.run();
   });
 }
-getPS3Ip().then((result: Partial<ScanResult>) => {
-  console.log(result.ip);
-});

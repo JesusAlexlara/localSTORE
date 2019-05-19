@@ -41,7 +41,7 @@ const uiState: {
   alphabetLastSelect: HTMLElement | null;
   storeLastSelect: HTMLElement;
   imageSource: Array<HTMLImageElement>;
-  games: Array<any>; 
+  games: Array<any>;
   response: any;
 } = {
   alphabetLastSelect: null,
@@ -307,7 +307,6 @@ function update() {
       parent.setAttribute("region", game.region);
       parent.setAttribute("type", game.type);
       parent.setAttribute("hold", localeMap["hold-to-download"]);
-      console.log(game.cover);
       parent.setAttribute("class", game.cover === null ? "-nocover" : "");
     });
     updateDetail(0);

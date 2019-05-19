@@ -23,7 +23,7 @@ let config;
 export function startPs3netServ(port: string) {
   port = port || "38008";
   config = readConfig();
-  console.log(`SPAWN ${ps3netsrvBin} ${config.ps3netservFolder} ${port} `);
+
   ps3netsetverInstance = spawn(`${ps3netsrvBin}`, [
     config.ps3netservFolder,
     port
@@ -46,9 +46,8 @@ function readPID() {
 
 export function stopPs3netServ(cb: Function) {
   const pid = readPID();
-  console.log(pid);
+
   if (pid && pid.pid) {
-    console.log("entro");
     kill(pid.pid, function(err) {
       ps3netsetverInstance = null;
       fs.writeFileSync(
@@ -56,7 +55,6 @@ export function stopPs3netServ(cb: Function) {
         JSON.stringify({}),
         "utf8"
       );
-      console.log("prooceo fin");
       cb && cb();
     });
   } else {
@@ -65,6 +63,5 @@ export function stopPs3netServ(cb: Function) {
 }
 
 export function getServerInstance() {
-  console.log("getServerInstance", ps3netsetverInstance);
   return ps3netsetverInstance;
 }

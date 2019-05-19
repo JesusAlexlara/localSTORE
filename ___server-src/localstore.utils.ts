@@ -20,7 +20,7 @@ export function getServerHost(serverConfig: ServerConfig) {
   return `http://${serverConfig.ip}:${serverConfig.port}`;
 }
 
-export function readConfig() {
+export function readConfig(): ServerConfig {
   return JSON.parse(
     fs.readFileSync(path.resolve(__dirname, "./config.json"), "utf8")
   );

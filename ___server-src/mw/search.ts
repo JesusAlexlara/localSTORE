@@ -7,7 +7,6 @@ let localstoreDb: any;
 export function search(req: express.Request, res: express.Response) {
   localstoreDb = getLocalStoreDb();
 
-  console.log(localstoreDb);
   if (req.query.data) {
     const searchState = JSON.parse(
       Buffer.from(req.query.data, "base64").toString()
