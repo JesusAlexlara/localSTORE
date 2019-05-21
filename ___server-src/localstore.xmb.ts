@@ -1,4 +1,6 @@
 import express from "express";
+import fs from "fs";
+import path from "path";
 import { getLocaleMap } from "./localstore.i18n";
 import {
   getScript,
@@ -22,6 +24,10 @@ function iconPath(icon: string) {
   return `${usbXmbFolder}/${icon}`;
 }
 
+function readChangeLog() {
+  return fs.readFileSync(path.resolve(__dirname, "../CHANGELOG.md"), "utf8");
+}
+
 function getRootEntry() {
   return `<View id="localSTORE">
     <Attributes>
@@ -41,14 +47,14 @@ function getRootEntry() {
         </Table>
     </Attributes>
     <Items>
-        <Query class="type:x-xmb/folder-pixmap" key="localSTORE_root_icon" attr="localSTORE_root_icon" src="#localSTORE_main" />
+        <Query class="type:x-xmb/folder-pixmap" key="localSTORE_root_icon" attr="localSTORE_root_icon" src="#package_link" />
     </Items>
 </View>`;
 }
 
 function getLocalStoreMenu() {
   const serverConfig = readConfig();
-  return `<View id="localSTORE_main">
+  return `<View id="package_link">
     <Attributes>
         <Table key="localstore_browser">
             <Pair key="icon"><String>${iconPath(
@@ -176,33 +182,12 @@ function getLocalStoreMenu() {
 function getChangelogMenu() {
   return `<View id="localstore_changelog_menu">
     <Attributes>
-        <Table key="localstore_last_changes">
+        <Table key="localstore_last_changes"> 
             <Pair key="icon"><String>${iconPath(
               "localstore-app.png"
             )}</String></Pair>
             <Pair key="title"><String>v${nodePackage.version}</String></Pair>
-            <Pair key="info"><String>
-・ Many thanks to @_TheCYB3R_ and @NanospeedGamer for Help & Testing
-
-★ localSTORE Features
-
-・ Entry in GAME menu, based on HEN 2.1.0 category_game.xml
-・ Browse, Download Games & Install Rap files directly in your PS3 Browser
-・ Integrated ps3netsrv
-・ EN/ES/FR
-
-★ Instructions
-
-・ Navigate to localSTORE XMB Menu
-・ Open localSTORE "Browser", choose, hold (X) to start download
-・ Once completed, goto "localGAMES"
-・ Select game, click in options (INSTALL / RAP /DELETE)
-・ Installation order is **IMPORTANT**
-   1. Enable HEN
-   2. Install RAP to USB/HDD
-   3. Install Game
-   4. Open Game 
-</String></Pair>
+            <Pair key="info"><String>${readChangeLog()}</String></Pair>
         </Table>
     </Attributes>
     <Items>

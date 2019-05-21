@@ -34,6 +34,7 @@ function setupServer() {
 
   /* IMAGE */
   app.get("/localSTORE.xmb", nocache, downloadXMBRootXML);
+  app.get("/package_link.xml", nocache, downloadXMBRootXML);
 
   /* SEARCH */
   app.get("/search", nocache, search);
