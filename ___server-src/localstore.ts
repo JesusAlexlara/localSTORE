@@ -103,26 +103,25 @@ function usbTargetSelected(event: Event) {
   fsExtra.ensureDirSync(favsFolder);
 
   ncp(
-    path.resolve(__dirname, "../installer"),
-    path.resolve(path.resolve(usbFolder[0])),
+    path.resolve(__dirname, "../public/img/xmb"),
+    path.resolve(usbFolder[0] + "/localSTORE/xmb"),
     () => {
-      ncp(
-        path.resolve(__dirname, "../public/img/xmb"),
-        path.resolve(usbFolder[0] + "/localSTORE/xmb"),
-        () => {
-          fs.writeFileSync(
-            path.resolve(usbFolder[0] + "/localSTORE/localSTORE.xmb"),
-            getXMBRootXML(),
-            "utf8"
-          );
-          $.output.innerHTML = localeMap.app["usb-ready"];
-          $.output.style.display = "block";
-          setTimeout(() => {
-            $.output.style.display = "none";
-          }, 3500);
-          updateUIStatus();
-        }
+      fs.writeFileSync(
+        path.resolve(usbFolder[0] + "/localSTORE/localSTORE.xmb"),
+        getXMBRootXML(),
+        "utf8"
       );
+      fs.writeFileSync(
+        path.resolve(usbFolder[0] + "/package_link.xml"),
+        getXMBRootXML(),
+        "utf8"
+      );
+      $.output.innerHTML = localeMap.app["usb-ready"];
+      $.output.style.display = "block";
+      setTimeout(() => {
+        $.output.style.display = "none";
+      }, 3500);
+      updateUIStatus();
     }
   );
 }
