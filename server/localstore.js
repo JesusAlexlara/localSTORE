@@ -86,16 +86,15 @@ function usbTargetSelected(event) {
     // create main localSTORE folder
     var favsFolder = path_1.default.resolve(usbFolder[0], "localSTORE/favs");
     fs_extra_1.default.ensureDirSync(favsFolder);
-    ncp(path_1.default.resolve(__dirname, "../installer"), path_1.default.resolve(path_1.default.resolve(usbFolder[0])), function () {
-        ncp(path_1.default.resolve(__dirname, "../public/img/xmb"), path_1.default.resolve(usbFolder[0] + "/localSTORE/xmb"), function () {
-            fs_1.default.writeFileSync(path_1.default.resolve(usbFolder[0] + "/localSTORE/localSTORE.xmb"), localstore_xmb_1.getXMBRootXML(), "utf8");
-            $.output.innerHTML = localeMap.app["usb-ready"];
-            $.output.style.display = "block";
-            setTimeout(function () {
-                $.output.style.display = "none";
-            }, 3500);
-            updateUIStatus();
-        });
+    ncp(path_1.default.resolve(__dirname, "../public/img/xmb"), path_1.default.resolve(usbFolder[0] + "/localSTORE/xmb"), function () {
+        fs_1.default.writeFileSync(path_1.default.resolve(usbFolder[0] + "/localSTORE/localSTORE.xmb"), localstore_xmb_1.getXMBRootXML(), "utf8");
+        fs_1.default.writeFileSync(path_1.default.resolve(usbFolder[0] + "/package_link.xml"), localstore_xmb_1.getXMBRootXML(), "utf8");
+        $.output.innerHTML = localeMap.app["usb-ready"];
+        $.output.style.display = "block";
+        setTimeout(function () {
+            $.output.style.display = "none";
+        }, 3500);
+        updateUIStatus();
     });
 }
 function pkgTargetSelected(event) {
