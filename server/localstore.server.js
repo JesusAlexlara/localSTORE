@@ -27,7 +27,6 @@ function setupServer() {
     app.get("/image-proxy", cache_1.nocache, image_1.imageProxy);
     /* IMAGE */
     app.get("/localSTORE.xmb", cache_1.nocache, localstore_xmb_1.downloadXMBRootXML);
-    app.get("/package_link.xml", cache_1.nocache, localstore_xmb_1.downloadXMBRootXML);
     /* SEARCH */
     app.get("/search", cache_1.nocache, search_1.search);
     /* INSTALL PKG */
