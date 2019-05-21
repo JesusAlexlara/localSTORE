@@ -26,7 +26,7 @@ const appLocale = app.getLocale().substr(0, 2);
 const localeMap =
   locales[avaliableLocales.includes(appLocale) ? appLocale : defaultLocale];
 
-const lsFileRegexp = /\[(.+?)\]-\[(ALL|US|EU|JP|HK)-(PS1|PS2|PS3|PSN|DEMO|C00|DLC|EDAT|MINI)\]-\[(([A-Z0-9]{6})-([A-Z0-9]{9})_[A-Z0-9]{2}-(.+?))\]-\[0x([0-9A-F]{32})\]/;
+const lsFileRegexpFull = /\[(.+?)\]-\[(ALL|US|EU|JP|HK)-(PS1|PS2|PS3|PSN|DEMO|C00|DLC|EDAT|MINI)\]-\[(([A-Z0-9]{6})-([A-Z0-9]{9})_[A-Z0-9]{2}(?:-(.+?))?)\](?:-\[0x([0-9A-F]{32})\])?/;
 
 export function getLocalStorePkgs(
   ip: string,
@@ -37,7 +37,7 @@ export function getLocalStorePkgs(
   return fs
     .readdirSync(folder)
     .filter(file => path.extname(file) === ".pkg" && file[0] !== ".")
-    .filter(file => lsFileRegexp.test(file))
+    .filter(file => lsFileRegexpFull.test(file))
     .map(file => {
       const [
         result,
@@ -49,7 +49,7 @@ export function getLocalStorePkgs(
         productCode,
         productDetailName,
         rap
-      ] = file.match(lsFileRegexp) as RegExpMatchArray;
+      ] = file.match(lsFileRegexpFull) as RegExpMatchArray;
 
       const foundGame = jp.query(
         { games: localstoreDb },
