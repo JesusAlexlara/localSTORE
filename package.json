@@ -1,14 +1,14 @@
 {
   "name": "localstore",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
     "build-ps3netsrv-darwin": "cd server/ps3netsrv/sources/darwin && make",
-    "pkg-osx": "npm run clean && electron-packager --ignore=\"___(pkg-installer|resources|server-src)\" --prune=true --overwrite --out=../localSTORE-APPS --platform=darwin --icon=localstore.icns ./",
-    "pkg-x32": "npm run clean && electron-packager --ignore=\"___(pkg-installer|resources|server-src)\" --prune=true --overwrite --out=../localSTORE-APPS --platform=win32 --arch=ia32 --icon=localstore.ico ./",
-    "pkg-x64": "npm run clean && electron-packager --ignore=\"___(pkg-installer|resources|server-src)\" --prune=true --overwrite --out=../localSTORE-APPS --platform=win32 --arch=x64 --icon=localstore.ico ./",
+    "pkg-osx": "npm run clean && electron-packager --ignore=\"___(resources|server-src)\" --prune=true --overwrite --out=../localSTORE-APPS --platform=darwin --icon=localstore.icns ./",
+    "pkg-x32": "npm run clean && electron-packager --ignore=\"___(resources|server-src)\" --prune=true --overwrite --out=../localSTORE-APPS --platform=win32 --arch=ia32 --icon=localstore.ico ./",
+    "pkg-x64": "npm run clean && electron-packager --ignore=\"___(resources|server-src)\" --prune=true --overwrite --out=../localSTORE-APPS --platform=win32 --arch=x64 --icon=localstore.ico ./",
     "clean": "cp ./server/config.base.json ./server/config.json && cp ./server/downloads.base.json ./server/downloads.json && cp ./bdd/localstore-db.base.json ./bdd/localstore-db.json && rm -rf ./server/raps && mkdir ./server/raps",
     "build-public": "cd public/src && tsc",
     "build-server": "cd ___server-src && tsc",
